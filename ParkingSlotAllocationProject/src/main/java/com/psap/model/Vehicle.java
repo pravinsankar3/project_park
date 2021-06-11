@@ -1,16 +1,28 @@
 package com.psap.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Vehicle")
 public class Vehicle {
 	// should be auto-generated
+	@Id
 	private long vehicleId;
 	private VehicleType vehicleType;
 	private String vehicleNumber;
 	private String vehicleCompany;
 	private String vehicleModel;
+	@OneToMany(mappedBy="usr",cascade=CascadeType.ALL)
 	private User owner;
 	
 	// Constructors, Getter & Setter method
-	
+	public Vehicle() {
+		super();
+	}
 	
 	public Vehicle(long vehicleId, VehicleType vehicleType, String vehicleNumber, String vehicleCompany,
 			String vehicleModel, User owner) {
@@ -69,6 +81,12 @@ public class Vehicle {
 
 	public void setOwner(User owner) {
 		this.owner = owner;
+	}
+
+	@Override
+	public String toString() {
+		return "Vehicle [vehicleId=" + vehicleId + ", vehicleType=" + vehicleType + ", vehicleNumber=" + vehicleNumber
+				+ ", vehicleCompany=" + vehicleCompany + ", vehicleModel=" + vehicleModel + ", owner=" + owner + "]";
 	}
 	
 	

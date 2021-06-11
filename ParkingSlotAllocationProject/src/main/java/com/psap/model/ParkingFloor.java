@@ -1,13 +1,24 @@
 package com.psap.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ParkingFloor")
 public class ParkingFloor {
 	// should be auto-generated
+	@Id
 	private int parkingFloorId;
 	private ParkingPremise parkingPremise;
 	private String floorNumber;
 	private int numberOfParkingSlots;
 	
 	// Constructors, Getter & Setter method
+	
+	public ParkingFloor() {
+		super();
+	}
 	
 	
 	public ParkingFloor(int parkingFloorId, ParkingPremise parkingPremise, String floorNumber,
@@ -49,6 +60,13 @@ public class ParkingFloor {
 
 	public void setNumberOfParkingSlots(int numberOfParkingSlots) {
 		this.numberOfParkingSlots = numberOfParkingSlots;
+	}
+
+
+	@Override
+	public String toString() {
+		return "ParkingFloor [parkingFloorId=" + parkingFloorId + ", parkingPremise=" + parkingPremise
+				+ ", floorNumber=" + floorNumber + ", numberOfParkingSlots=" + numberOfParkingSlots + "]";
 	}
 	
 	

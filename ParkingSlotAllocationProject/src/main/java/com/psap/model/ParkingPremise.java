@@ -1,14 +1,23 @@
 package com.psap.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ParkingPremise")
 public class ParkingPremise {
 	// should be auto-generated
+	@Id
 	private int parkingPremiseId;
 	private String parkingPremiseName;
 	private Address premiseAddress;
 	private int numberOfParkingFloors;
 	
 	// Constructors, Getter & Setter method
-	
+	public ParkingPremise() {
+		super();
+	}
 	
 	public ParkingPremise(int parkingPremiseId, String parkingPremiseName, Address premiseAddress,
 			int numberOfParkingFloors) {

@@ -1,7 +1,14 @@
 package com.psap.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "usr")
 public class User {
 	// should be auto-generated
+	@Id
 	private long userId;
 	private String firstName;
 	private String lastName;
@@ -10,7 +17,9 @@ public class User {
 	private boolean isActive;
 	
 	// Constructors, Getter & Setter method
-	
+	public User() {
+		super();
+	}
 	
 	public User(long userId, String firstName, String lastName, String email, String mobile, boolean isActive) {
 		super();

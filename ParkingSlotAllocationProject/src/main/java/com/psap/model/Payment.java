@@ -2,15 +2,27 @@ package com.psap.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Payment")
 public class Payment {
+	@Id
 	private long paymentId;
 	private PaymentType type;
 	private Date paymentDateTime;
 	private double amountPaid;
+	@OneToMany(mappedBy="PaymentStatus",cascade=CascadeType.ALL)
 	private PaymentStatus status;
 	
 	// Constructors, Getter & Setter method
-	
+	public Payment() {
+		super();
+	}
 	
 	public Payment(long paymentId, PaymentType type, Date paymentDateTime, double amountPaid, PaymentStatus status) {
 		super();
@@ -59,6 +71,12 @@ public class Payment {
 
 	public void setStatus(PaymentStatus status) {
 		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return "Payment [paymentId=" + paymentId + ", type=" + type + ", paymentDateTime=" + paymentDateTime
+				+ ", amountPaid=" + amountPaid + ", status=" + status + "]";
 	}
 	
 	

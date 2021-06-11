@@ -2,7 +2,16 @@ package com.psap.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ParkingSlots")
 public class ParkingSlots {
+	@Id
 	private long parkingSlotId;
 	private ParkingFloor parkingFloor;
 	private Vehicle vehicle;
@@ -10,10 +19,13 @@ public class ParkingSlots {
 	private String parkingTime;
 	private Date bookingDate;
 	private int parkingDuration;
+	@OneToMany(mappedBy="Payment",cascade=CascadeType.ALL)
 	private Payment payment;
 	
 	// Constructors, Getter & Setter method
-	
+	public ParkingSlots() {
+		super();
+	}
 	
 	public ParkingSlots(long parkingSlotId, ParkingFloor parkingFloor, Vehicle vehicle, Date parkingDate,
 			String parkingTime, Date bookingDate, int parkingDuration, Payment payment) {
@@ -90,6 +102,13 @@ public class ParkingSlots {
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+
+	@Override
+	public String toString() {
+		return "ParkingSlots [parkingSlotId=" + parkingSlotId + ", parkingFloor=" + parkingFloor + ", vehicle="
+				+ vehicle + ", parkingDate=" + parkingDate + ", parkingTime=" + parkingTime + ", bookingDate="
+				+ bookingDate + ", parkingDuration=" + parkingDuration + ", payment=" + payment + "]";
 	}
 	
 	
