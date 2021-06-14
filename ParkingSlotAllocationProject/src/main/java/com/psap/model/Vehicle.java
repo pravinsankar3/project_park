@@ -2,8 +2,11 @@ package com.psap.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -12,11 +15,12 @@ public class Vehicle {
 	// should be auto-generated
 	@Id
 	private long vehicleId;
+	@Enumerated(EnumType.ORDINAL)
 	private VehicleType vehicleType;
 	private String vehicleNumber;
 	private String vehicleCompany;
 	private String vehicleModel;
-	@OneToMany(mappedBy="usr",cascade=CascadeType.ALL)
+	@OneToOne
 	private User owner;
 	
 	// Constructors, Getter & Setter method

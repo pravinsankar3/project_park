@@ -2,6 +2,7 @@ package com.psap.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -11,6 +12,7 @@ public class ParkingPremise {
 	@Id
 	private int parkingPremiseId;
 	private String parkingPremiseName;
+	@OneToOne
 	private Address premiseAddress;
 	private int numberOfParkingFloors;
 	

@@ -1,9 +1,12 @@
 package com.psap.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -13,10 +16,11 @@ import javax.persistence.Table;
 public class Payment {
 	@Id
 	private long paymentId;
+	@Enumerated(EnumType.ORDINAL)
 	private PaymentType type;
 	private Date paymentDateTime;
 	private double amountPaid;
-	@OneToMany(mappedBy="PaymentStatus",cascade=CascadeType.ALL)
+	@Enumerated(EnumType.ORDINAL)
 	private PaymentStatus status;
 	
 	// Constructors, Getter & Setter method

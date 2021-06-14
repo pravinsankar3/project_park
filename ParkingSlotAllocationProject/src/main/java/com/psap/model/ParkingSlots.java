@@ -5,7 +5,9 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,13 +15,15 @@ import javax.persistence.Table;
 public class ParkingSlots {
 	@Id
 	private long parkingSlotId;
+	@ManyToOne()
 	private ParkingFloor parkingFloor;
+	@OneToOne
 	private Vehicle vehicle;
 	private Date parkingDate;
 	private String parkingTime;
 	private Date bookingDate;
 	private int parkingDuration;
-	@OneToMany(mappedBy="Payment",cascade=CascadeType.ALL)
+	@ManyToOne()
 	private Payment payment;
 	
 	// Constructors, Getter & Setter method

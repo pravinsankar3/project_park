@@ -2,10 +2,9 @@ package com.psap.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,9 +14,9 @@ public class Login implements Serializable{
 	@Id
 	private String loginId;
 	private String password;
-	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
-	private User user;
-	@OneToMany(mappedBy="role",cascade=CascadeType.ALL)
+	@OneToOne()
+	private User usr;
+	@OneToOne
 	private Role role;
 	
 	// Constructors, Getter & Setter method
@@ -26,11 +25,11 @@ public class Login implements Serializable{
 		super();
 	}
 	
-	public Login(String loginId, String password, User user, Role role) {
+	public Login(String loginId, String password, User usr, Role role) {
 		super();
 		this.loginId = loginId;
 		this.password = password;
-		this.user = user;
+		this.usr = usr;
 		this.role = role;
 	}
 
@@ -51,11 +50,11 @@ public class Login implements Serializable{
 	}
 
 	public User getUser() {
-		return user;
+		return usr;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(User usr) {
+		this.usr = usr;
 	}
 
 	public Role getRole() {
@@ -68,7 +67,7 @@ public class Login implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Login [loginId=" + loginId + ", password=" + password + ", user=" + user + ", role=" + role + "]";
+		return "Login [loginId=" + loginId + ", password=" + password + ", user=" + usr + ", role=" + role + "]";
 	}
 	
 	

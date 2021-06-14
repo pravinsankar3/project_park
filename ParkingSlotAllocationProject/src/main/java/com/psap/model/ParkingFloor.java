@@ -2,6 +2,7 @@ package com.psap.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -10,6 +11,7 @@ public class ParkingFloor {
 	// should be auto-generated
 	@Id
 	private int parkingFloorId;
+	@ManyToOne()
 	private ParkingPremise parkingPremise;
 	private String floorNumber;
 	private int numberOfParkingSlots;
