@@ -1,6 +1,9 @@
 package com.psap.serviceImpl;
 
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.psap.exceptions.DuplicateParkingFloorException;
 import com.psap.exceptions.DuplicateParkingPremiseException;
@@ -12,49 +15,70 @@ import com.psap.model.Login;
 import com.psap.model.ParkingFloor;
 import com.psap.model.ParkingPremise;
 import com.psap.model.User;
+import com.psap.repository.LoginRepository;
+import com.psap.repository.ParkingPremiseRepository;
+import com.psap.repository.UserRepository;
 import com.psap.service.AdminService;
 
 public class AdminServiceImpl implements AdminService{
+	
+	@Autowired
+	LoginRepository lr;
+	@Autowired
+	UserRepository ur;
+	@Autowired
+	ParkingPremiseRepository pp;
 
 	@Override
 	public boolean login(Login login) throws InvalidLoginCredintialException {
-		// TODO Auto-generated method stub
-		return false;
+		Optional<Login> l = lr.findById(login.getLoginId());
+		if(login.getPassword().equals(l.get().getPassword()))
+			throw new InvalidLoginCredintialException("User Id and Password not Matching");
+		return true;
 	}
 
 	@Override
 	public boolean blockUser(User user) throws NoSuchUserException {
-		// TODO Auto-generated method stub
-		return false;
+		Optional<User> u = ur.findById(user.getUserId());
+		if(!u.isPresent())
+			throw new NoSuchUserException("User is not available to block");
+		ur.delete(user);
+		return true;
 	}
 
 	@Override
 	public boolean addParkingPremise(ParkingPremise parkingPremise) throws DuplicateParkingPremiseException {
-		// TODO Auto-generated method stub
-		return false;
+		Optional<ParkingPremise> p = pp.findById(parkingPremise.getParkingPremiseId());
+		if(p.isPresent())
+			throw new DuplicateParkingPremiseException("Parking Premise is already present");
+		pp.save(parkingPremise);
+		return true;
 	}
 
 	@Override
 	public ParkingPremise getParkingPremiseById(long parkingPremiseId) throws NoSuchParkingPremiseException {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<ParkingPremise> p = pp.findById((int) parkingPremiseId);
+		if(p.isPresent())
+			throw new NoSuchParkingPremiseException("No Parking Premise found for this ID");
+		return p.get();
 	}
 
 	@Override
 	public List<ParkingPremise> getParkingPremiseByName(String premiseName) throws NoSuchParkingPremiseException {
-		// TODO Auto-generated method stub
-		return null;
+//		ParkingPremise p = pp.
+		return (List<ParkingPremise>) pp;
+//		return p.get();
 	}
 
 	@Override
 	public List<ParkingPremise> getAllParkingPremises() {
-		// TODO Auto-generated method stub
-		return null;
+		return pp.findAll();
 	}
 
 	@Override
 	public ParkingPremise modifyParkingPremise(ParkingPremise parkingPremise) {
-		// TODO Auto-generated method stub
+		Optional<ParkingPremise> p = pp.findById(parkingPremise.getParkingPremiseId());
+//		parkingPremise.
 		return null;
 	}
 
