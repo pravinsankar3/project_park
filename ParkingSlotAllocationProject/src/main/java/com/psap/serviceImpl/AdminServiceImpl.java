@@ -68,7 +68,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public List<ParkingPremise> getParkingPremiseByName(String premiseName) throws NoSuchParkingPremiseException {
-		ParkingPremise p = pp.findAll
+		//ParkingPremise p = pp.findAll
 		return (List<ParkingPremise>) pp;
 //		return p.get();
 	}
