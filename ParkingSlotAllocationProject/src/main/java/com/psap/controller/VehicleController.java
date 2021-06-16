@@ -30,7 +30,6 @@ public class VehicleController {
 	@PostMapping
 	public ResponseEntity<?> addUsersVehicle(@RequestBody Vehicle vehicle) throws DuplicateVehicleException {
 		// TODO Auto-generated method stub
-		System.out.println(vehicle);
 		service.addUsersVehicle(vehicle);
 		return new ResponseEntity<String>("",HttpStatus.CREATED);
 	}
@@ -57,9 +56,8 @@ public class VehicleController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> modifyUsersVehicle(@RequestBody Vehicle vehicle) throws DuplicateVehicleException {
+	public ResponseEntity<?> modifyUsersVehicle(@RequestBody Vehicle vehicle) {
 		// TODO Auto-generated method stub
-		System.out.println(vehicle);
 		service.modifyVehicle(vehicle);
 		return new ResponseEntity<String>("Vehicle details updated",HttpStatus.OK);
 	}

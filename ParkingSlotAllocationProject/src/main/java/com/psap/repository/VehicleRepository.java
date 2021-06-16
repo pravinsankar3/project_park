@@ -13,5 +13,4 @@ import com.psap.model.Vehicle;
 public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 	Vehicle findByVehicleNumberAndOwnerUserId(String vehicleNumber, long userId);
 	List<Vehicle> findByOwner(User u);
-	Vehicle getOne(long vehicleId);
 }

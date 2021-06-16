@@ -1,6 +1,7 @@
 package com.psap.serviceImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,36 +18,29 @@ public class VehicleServiceImpl implements VehicleService{
 
 	@Autowired
 	VehicleRepository dao;
-	
-	
+		
 	@Override
 	public boolean addUsersVehicle(Vehicle vehicle) throws DuplicateVehicleException {
-		// TODO Auto-generated method stub
 		System.out.println(vehicle.getOwner());
+		Optional<Vehicle> v = dao.findById((int) vehicle.getVehicleId());
+		if(v.isPresent())
+			throw new DuplicateVehicleException("Vehicle already exist");
 		dao.save(vehicle);
 		return true;
 	}
 
 	@Override
 	public Vehicle findVehicleByVehicleNumber(String vehicleNumber, int userId) throws NoSuchVehicleException {
-		// TODO Auto-generated method stub
-		Vehicle v= new Vehicle();
-		v.setVehicleNumber(vehicleNumber);
-		User u=new User();
-		u.setUserId(userId);
-		v.setOwner(u);
-//		Vehicle userVehicle = dao.findOne(Example.of(v));
 		Vehicle userVehicle = dao.findByVehicleNumberAndOwnerUserId(vehicleNumber, userId);
+		if(userVehicle == null)
+			throw new NoSuchVehicleException("No Vehicle found of this Vehicle Number");
 		return userVehicle;
 	}
 
 	@Override
 	public List<Vehicle> findAllVehiclesByUserId(int ownerId) {
-		// TODO Auto-generated method stub
-		Vehicle v= new Vehicle();
 		User u=new User();
 		u.setUserId(ownerId);
-		v.setOwner(u);
 		List<Vehicle> vehiclesList = dao.findByOwner(u);
 
 		return vehiclesList;
@@ -54,31 +48,17 @@ public class VehicleServiceImpl implements VehicleService{
 
 	@Override
 	public boolean removeVehicleByVehicleNumber(String vehicleNumber, int userId) throws NoSuchVehicleException {
-		// TODO Auto-generated method stub
-		Vehicle v= new Vehicle();
-		v.setVehicleNumber(vehicleNumber);
-		User u=new User();
-		u.setUserId(userId);
-		v.setOwner(u);
-		dao.delete(v);
+		Vehicle userVehicle = dao.findByVehicleNumberAndOwnerUserId(vehicleNumber, userId);
+		if(userVehicle == null)
+			throw new NoSuchVehicleException("No Vehicle found of this Vehicle Number");
+		dao.delete(userVehicle);
 		return true;
 	}
 
 	@Override
 	public Vehicle modifyVehicle(Vehicle vehicle) {
-		// TODO Auto-generated method stub
-		Vehicle vehicleRef = dao.getOne(vehicle.getVehicleId());
-		if(vehicle.getOwner() != null) {
-			vehicleRef.setOwner(vehicle.getOwner());
-		}
-		if(vehicle.getVehicleCompany() != null) {
-			vehicleRef.setVehicleCompany(vehicle.getVehicleCompany());
-		}
-		vehicleRef.setVehicleModel(vehicle.getVehicleModel());
-		vehicleRef.setVehicleNumber(vehicle.getVehicleNumber());
-		vehicleRef.setVehicleType(vehicle.getVehicleType());
-		dao.save(vehicleRef);
-		return vehicleRef;
+		dao.save(vehicle);
+		return vehicle;
 	}
 
 }
