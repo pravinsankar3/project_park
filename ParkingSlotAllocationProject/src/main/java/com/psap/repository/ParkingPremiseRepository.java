@@ -10,5 +10,5 @@ import com.psap.model.ParkingPremise;
 @Repository
 public interface ParkingPremiseRepository extends JpaRepository <ParkingPremise, Integer> {
 	List<ParkingPremise> findByParkingPremiseName(String parkingPremiseName);
-
+	ParkingPremise getOne(int parkingPremiseId);
 }

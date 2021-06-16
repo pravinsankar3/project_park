@@ -35,7 +35,7 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public boolean login(Login login) throws InvalidLoginCredintialException {
 		Optional<Login> l = lr.findById(login.getLoginId());
-		if(login.getPassword().equals(l.get().getPassword()))
+		if(!login.getPassword().equals(l.get().getPassword()))
 			throw new InvalidLoginCredintialException("User Id and Password not Matching");
 		return true;
 	}
@@ -79,11 +79,17 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public ParkingPremise modifyParkingPremise(ParkingPremise parkingPremise) {
-		Optional<ParkingPremise> p = pp.findById(parkingPremise.getParkingPremiseId());
-		if(parkingPremise.getParkingPremiseId() != null) {
+		ParkingPremise pre = pp.getOne(parkingPremise.getParkingPremiseId());
+		if(parkingPremise.getParkingPremiseName() == null) {
 			
+			pre.setParkingPremiseName(parkingPremise.getParkingPremiseName());
 		}
-		return null;
+		pre.setNumberOfParkingFloors(parkingPremise.getNumberOfParkingFloors());
+		pre.setParkingPremiseId(parkingPremise.getParkingPremiseId());
+		pre.setPremiseAddress(parkingPremise.getPremiseAddress());
+		
+		pp.save(pre);
+		return pre;
 	}
 
 	@Override
@@ -115,20 +121,27 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public List<ParkingFloor> getParkingFloorByNumber(long parkingPremiseId, String floorNumber)
 			throws NoSuchParkingFloorException {
-		// TODO Auto-generated method stub
-		return null;
+		List<ParkingFloor> li = pf.findByFloorNo(floorNumber);
+		return li;
 	}
 
 	@Override
 	public List<ParkingFloor> getAllParkingFloors(long parkingPremiseId) {
-		// TODO Auto-generated method stub
-		return null;
+		return pf.findAll();
 	}
 
 	@Override
 	public ParkingFloor modifyParkingCapacity(ParkingFloor parkingFloor) {
-		// TODO Auto-generated method stub
-		return null;
+		ParkingFloor pfe = pf.getOne(parkingFloor.getParkingFloorId());
+		if(parkingFloor.getParkingFloorId() == 0) {
+			
+			pfe.setParkingFloorId(parkingFloor.getParkingFloorId());
+		}
+		pfe.setFloorNumber(parkingFloor.getFloorNumber());
+		pfe.setNumberOfParkingSlots(parkingFloor.getNumberOfParkingSlots());
+		pfe.setParkingPremise(parkingFloor.getParkingPremise());
+		pf.save(pfe);
+		return pfe;
 	}
 
 	@Override
