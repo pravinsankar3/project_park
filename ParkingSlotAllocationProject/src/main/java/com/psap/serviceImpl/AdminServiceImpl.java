@@ -16,6 +16,7 @@ import com.psap.model.ParkingFloor;
 import com.psap.model.ParkingPremise;
 import com.psap.model.User;
 import com.psap.repository.LoginRepository;
+import com.psap.repository.ParkingFloorRepository;
 import com.psap.repository.ParkingPremiseRepository;
 import com.psap.repository.UserRepository;
 import com.psap.service.AdminService;
@@ -28,6 +29,8 @@ public class AdminServiceImpl implements AdminService{
 	UserRepository ur;
 	@Autowired
 	ParkingPremiseRepository pp;
+	@Autowired
+	ParkingFloorRepository pf;
 
 	@Override
 	public boolean login(Login login) throws InvalidLoginCredintialException {
@@ -58,14 +61,14 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public ParkingPremise getParkingPremiseById(long parkingPremiseId) throws NoSuchParkingPremiseException {
 		Optional<ParkingPremise> p = pp.findById((int) parkingPremiseId);
-		if(p.isPresent())
+		if(!p.isPresent())
 			throw new NoSuchParkingPremiseException("No Parking Premise found for this ID");
 		return p.get();
 	}
 
 	@Override
 	public List<ParkingPremise> getParkingPremiseByName(String premiseName) throws NoSuchParkingPremiseException {
-//		ParkingPremise p = pp.
+		ParkingPremise p = pp.findAll
 		return (List<ParkingPremise>) pp;
 //		return p.get();
 	}
@@ -84,20 +87,28 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public boolean removeParkingPremise(int parkingPremiseId) throws NoSuchParkingPremiseException {
-		// TODO Auto-generated method stub
-		return false;
+		Optional<ParkingPremise> p = pp.findById((int) parkingPremiseId);
+		if(!p.isPresent())
+			throw new NoSuchParkingPremiseException("No Parking Premise found for this ID");
+		pp.deleteById(parkingPremiseId);
+		return true;
 	}
 
 	@Override
 	public boolean addParkingFloor(ParkingFloor parkingFloor) throws DuplicateParkingFloorException {
-		// TODO Auto-generated method stub
-		return false;
+		Optional<ParkingFloor> p = pf.findById(parkingFloor.getParkingFloorId());
+		if(p.isPresent())
+			throw new DuplicateParkingFloorException("Parking Floor is already present");
+		pf.save(parkingFloor);
+		return true;
 	}
 
 	@Override
 	public ParkingFloor getParkingFloorById(long parkingFloorId) throws NoSuchParkingFloorException {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<ParkingFloor> p = pf.findById((int) parkingFloorId);
+		if(!p.isPresent())
+			throw new NoSuchParkingFloorException("No Parking Floor found for this ID");
+		return p.get();
 	}
 
 	@Override
@@ -121,8 +132,11 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public boolean removeParkingFloor(long parkingFloorId) throws NoSuchParkingPremiseException {
-		// TODO Auto-generated method stub
-		return false;
+		Optional<ParkingFloor> p = pf.findById((int) parkingFloorId);
+		if(!p.isPresent())
+			throw new NoSuchParkingPremiseException("No Parking Floor found for this ID");
+		pp.deleteById((int) parkingFloorId);
+		return true;
 	}
 
 }
