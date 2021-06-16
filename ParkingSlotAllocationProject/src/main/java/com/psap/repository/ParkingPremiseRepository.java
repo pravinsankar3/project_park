@@ -7,5 +7,6 @@ import com.psap.model.ParkingPremise;
 
 @Repository
 public interface ParkingPremiseRepository extends JpaRepository <ParkingPremise, Integer> {
+	ParkingPremise findByParkingPremiseName(String vehicleNumber);
 
 }
