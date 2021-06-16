@@ -68,7 +68,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public List<ParkingPremise> getParkingPremiseByName(String premiseName) throws NoSuchParkingPremiseException {
-		List<ParkingPremise> p = pp.findByParkingPremiseName(premiseName);
+		List<ParkingPremise> p = (List<ParkingPremise>) pp.findByParkingPremiseName(premiseName);
 		return p;
 	}
 
@@ -79,7 +79,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public ParkingPremise modifyParkingPremise(ParkingPremise parkingPremise) {
-		ParkingPremise pre = pp.getOne(parkingPremise.getParkingPremiseId());
+		ParkingPremise pre = (ParkingPremise) pp.findByParkingPremiseId(parkingPremise.getParkingPremiseId());
 		if(parkingPremise.getParkingPremiseName() == null) {
 			
 			pre.setParkingPremiseName(parkingPremise.getParkingPremiseName());
@@ -121,7 +121,7 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public List<ParkingFloor> getParkingFloorByNumber(long parkingPremiseId, String floorNumber)
 			throws NoSuchParkingFloorException {
-		List<ParkingFloor> li = pf.findByFloorNo(floorNumber);
+		List<ParkingFloor> li = (List<ParkingFloor>) pf.findByFloorNumber(floorNumber);
 		return li;
 	}
 
@@ -132,8 +132,8 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public ParkingFloor modifyParkingCapacity(ParkingFloor parkingFloor) {
-		ParkingFloor pfe = pf.getOne(parkingFloor.getParkingFloorId());
-		if(parkingFloor.getParkingFloorId() == 0) {
+		ParkingFloor pfe = (ParkingFloor) pf.findByParkingFloorId(parkingFloor.getParkingFloorId());
+		if(parkingFloor.getParkingFloorId() != 0) {
 			
 			pfe.setParkingFloorId(parkingFloor.getParkingFloorId());
 		}
