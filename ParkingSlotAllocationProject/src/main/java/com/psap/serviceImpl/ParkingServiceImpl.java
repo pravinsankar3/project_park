@@ -1,12 +1,9 @@
 package com.psap.serviceImpl;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.psap.exceptions.NoSuchParkingSlotException;
 import com.psap.exceptions.ParkingSlotNotAvailableException;
 import com.psap.model.Address;
@@ -77,6 +74,12 @@ public class ParkingServiceImpl implements ParkingService {
 		if(!slot.isPresent())
 			throw new NoSuchParkingSlotException("Slot With Id "+ parkingSlotId +" Not Found");
 		return slot;
+	}
+
+	@Override
+	public List<ParkingSlots> getAllParkingSlotsByPremise(ParkingPremise parkingPremise) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
