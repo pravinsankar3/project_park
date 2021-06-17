@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
 	return p;
 }
 
-@Override
+//@Override
 //	public User modifyUserProfile(User user) throws NoSuchUserException {
 //	User us = (User) ur.findByUserId(user.getUserId());
 //	if(user.getUserId() != ) {
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
 	return true;
 }
 
-@Override
+//@Override
 //	public Login changePassword(Login login) throws InvalidLoginCredintialException {
 //	Login l = (Login)lr.findByLoginId(login.getLoginId());
 //	if(login.getLoginId() == null) {
@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
 //	l.setUser(login.getUser());
 //	lr.save(l);
 //	return l;
-}
+//}
 
 	@Override
 	public void forgotPassword(String loginId) throws NoSuchUserException {
