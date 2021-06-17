@@ -113,6 +113,10 @@ public class ParkingSlots {
 				+ bookingDate + ", parkingDuration=" + parkingDuration + ", payment=" + payment + "]";
 	}
 	
+
+	
+
+	
 	
 	
 }
