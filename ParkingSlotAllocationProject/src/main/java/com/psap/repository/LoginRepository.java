@@ -7,5 +7,5 @@ import com.psap.model.Login;
 
 @Repository
 public interface LoginRepository extends JpaRepository<Login, String> {
-
+	Login findByLoginId(String loginId);
 }
