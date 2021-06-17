@@ -62,7 +62,7 @@ public class ParkingServiceImpl implements ParkingService {
 //	}
 
 	@Override
-	public Optional<ParkingFloor> getAllParkingSlotsByFloor(ParkingFloor parkingFloor) {
+	public <ParkingFloor> getAllParkingSlotsByFloor(ParkingFloor parkingFloor) {
 		Optional<ParkingFloor> p = parkFloorRepo.findById(parkingFloor.getNumberOfParkingSlots());
 		return p;
 	}

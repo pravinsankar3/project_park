@@ -20,12 +20,15 @@ import com.psap.model.Login;
 import com.psap.model.User;
 import com.psap.repository.LoginRepository;
 import com.psap.repository.UserRepository;
+import com.psap.service.UserService;
 
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 	
+	@Autowired
+	UserService service;
 	@Autowired
 	UserRepository userrepo;
 	@Autowired
