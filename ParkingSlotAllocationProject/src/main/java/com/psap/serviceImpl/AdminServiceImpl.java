@@ -80,14 +80,13 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public ParkingPremise modifyParkingPremise(ParkingPremise parkingPremise) {
 		ParkingPremise pre = (ParkingPremise) pp.findByParkingPremiseId(parkingPremise.getParkingPremiseId());
-		if(parkingPremise.getParkingPremiseName() == null) {
-			
-			pre.setParkingPremiseName(parkingPremise.getParkingPremiseName());
+		if(pre == null) {
+			System.out.println("No Parking Premise found to modify");
 		}
+		pre.setParkingPremiseName(parkingPremise.getParkingPremiseName());
 		pre.setNumberOfParkingFloors(parkingPremise.getNumberOfParkingFloors());
 		pre.setParkingPremiseId(parkingPremise.getParkingPremiseId());
 		pre.setPremiseAddress(parkingPremise.getPremiseAddress());
-		
 		pp.save(pre);
 		return pre;
 	}
@@ -133,10 +132,10 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public ParkingFloor modifyParkingCapacity(ParkingFloor parkingFloor) {
 		ParkingFloor pfe = (ParkingFloor) pf.findByParkingFloorId(parkingFloor.getParkingFloorId());
-		if(parkingFloor.getParkingFloorId() != 0) {
-			
-			pfe.setParkingFloorId(parkingFloor.getParkingFloorId());
+		if(pfe == null) {
+			System.out.println("No Parking Floor to modify");
 		}
+		pfe.setParkingFloorId(parkingFloor.getParkingFloorId());
 		pfe.setFloorNumber(parkingFloor.getFloorNumber());
 		pfe.setNumberOfParkingSlots(parkingFloor.getNumberOfParkingSlots());
 		pfe.setParkingPremise(parkingFloor.getParkingPremise());
