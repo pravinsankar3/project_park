@@ -1,14 +1,11 @@
 package com.psap.ErrorHandler;
-
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
 import com.psap.exceptions.DuplicateParkingFloorException;
 import com.psap.exceptions.DuplicateParkingPremiseException;
 import com.psap.exceptions.DuplicateUserException;
