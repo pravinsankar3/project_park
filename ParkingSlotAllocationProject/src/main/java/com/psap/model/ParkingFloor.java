@@ -16,6 +16,7 @@ public class ParkingFloor {
 	private String floorNumber;
 	private int numberOfParkingSlots;
 	
+	
 	// Constructors, Getter & Setter method
 	
 	public ParkingFloor() {
@@ -63,7 +64,7 @@ public class ParkingFloor {
 	public void setNumberOfParkingSlots(int numberOfParkingSlots) {
 		this.numberOfParkingSlots = numberOfParkingSlots;
 	}
-
+	
 
 	@Override
 	public String toString() {
