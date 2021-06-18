@@ -87,7 +87,6 @@ public class AdminServiceImpl implements AdminService{
 		pre.setNumberOfParkingFloors(parkingPremise.getNumberOfParkingFloors());
 		pre.setParkingPremiseId(parkingPremise.getParkingPremiseId());
 		pre.setPremiseAddress(parkingPremise.getPremiseAddress());
-		
 		pp.save(pre);
 		return pre;
 	}
