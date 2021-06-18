@@ -31,7 +31,8 @@ public class ParkingController {
 	ParkingFloor fs;
 
 	@GetMapping("{parkingId}")
-	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId) {
+	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId)
+			throws NoSuchParkingSlotException {
 
 		Optional<ParkingSlots> ParkingSlots = service.getParkingSlotsById(parkingId);
 
@@ -45,7 +46,7 @@ public class ParkingController {
 			throw new ParkingSlotNotAvailableException("Booking slots are not available");
 		}
 		service.bookParkingSlot(slot);
-		return new ResponseEntity<String> ("parkingSlot booked", HttpStatus.OK);
+		return new ResponseEntity<String>("parkingSlot booked", HttpStatus.OK);
 	}
 
 	@GetMapping("/checkavail")
@@ -59,7 +60,7 @@ public class ParkingController {
 	}
 
 	@DeleteMapping("/cancel")
-	public boolean cancelParkingSlotBooking(ParkingSlots slot) throws NoSuchParkingSlotException {
+	public boolean cancelParkingSlotBooking(@RequestBody ParkingSlots slot) throws NoSuchParkingSlotException {
 		if (service.cancelParkingSlotBooking(slot)) {
 			boolean cancel = service.cancelParkingSlotBooking(slot);
 			return cancel;
@@ -68,14 +69,16 @@ public class ParkingController {
 
 	}
 
-	@GetMapping("allpp")
-	public ResponseEntity<?> getAllParkingSlotsByPremise(ParkingPremise parkingPremise) {
-		ParkingFloor p = service.getAllParkingSlotsByPremise(parkingPremise.);
-		return new ResponseEntity<?>(fs.getNumberOfParkingSlots() , HttpStatus.OK);
-	}
+//	@GetMapping("allpp")
+//	public ResponseEntity<?> getAllParkingSlotsByPremise(ParkingPremise parkingPremise) {
+//		List<ParkingSlots> ls = service.getAllParkingSlotsByPremise(parkingPremise);
+//		
+//	
+//	}
 
 	@GetMapping("{pslots}")
-	public Optional<ParkingSlots> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
+	public Optional<ParkingSlots> getParkingSlotsById(@PathVariable("pslots") @RequestBody long parkingSlotId)
+			throws NoSuchParkingSlotException {
 		Optional<ParkingSlots> ps = service.getParkingSlotsById(parkingSlotId);
 		return ps;
 	}

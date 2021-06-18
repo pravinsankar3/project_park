@@ -20,100 +20,108 @@ import com.psap.model.User;
 import com.psap.repository.LoginRepository;
 import com.psap.repository.UserRepository;
 
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
-	
+
 	@Autowired
 	UserRepository userrepo;
 	@Autowired
 	LoginRepository loginrepo;
-	
-												// Get Mapping //
-	
-	// Get all Users 
-	
-	@GetMapping("/allusers")   
-	public List<User> getAllUsers(){
+
+	// Get Mapping //
+
+	// Get all Users
+
+	@GetMapping("/allusers")
+	public List<User> getAllUsers() {
 		List<User> list = (List<User>) userrepo.findAll();
 		return list;
 	}
-	
-	// User to login 
-	
-	@GetMapping("/login")     
-	public ResponseEntity<?> loginUser(Login login) throws NoSuchUserException {
-		
+
+	// User to login
+
+	@GetMapping("/login")
+	public ResponseEntity<?> loginUser(@RequestBody Login login) throws NoSuchUserException {
+
 		if (!userrepo.equals(login))
-			throw new NoSuchUserException("User id"+login.getLoginId() + "does not exists");
-		
+			throw new NoSuchUserException("User id" + login.getLoginId() + "does not exists");
+
 		return new ResponseEntity<String>("User Logged in Successfully", HttpStatus.CREATED);
 	}
-	
+
 	// Find User by login Id
-	
+
 	@GetMapping("/finduser/{uid}")
-	public ResponseEntity<?> getUserProfileById(@PathVariable("uid") long userId) throws NoSuchUserException{
+	public ResponseEntity<?> getUserProfileById(@PathVariable("uid") @RequestBody long userId)
+			throws NoSuchUserException {
 		Optional<User> opt = userrepo.findById(userId);
 		if (opt.isPresent())
 			return new ResponseEntity<User>(opt.get(), HttpStatus.OK);
-		throw new NoSuchUserException("User with Id " + userId + "Not Found");
+		// throw new NoSuchUserException("User with Id " + userId + "Not Found");
+		return new ResponseEntity<String>("User with Id " + userId + "Not Found", HttpStatus.CREATED);
+
 	}
-	
-	
-												// Post Mapping //
-	
+
+	// Post Mapping //
+
 	// User to register
-	
-	@PostMapping("/register") 		
-	public ResponseEntity<?> registerUser(User user) throws DuplicateUserException {
+
+	@PostMapping("/register")
+	public ResponseEntity<?> registerUser(@RequestBody User user) throws DuplicateUserException {
 		Optional<User> opt = userrepo.findById(user.getUserId());
-		if(opt.isPresent())
-			throw new DuplicateUserException("User with Id " +user.getUserId()+ "Already exists");
+		if (opt.isPresent())
+			throw new DuplicateUserException("User with Id " + user.getUserId() + "Already exists");
 		userrepo.save(user);
-		return new ResponseEntity<String>("User Registered Sucessfully",HttpStatus.CREATED);
+		return new ResponseEntity<String>("User Registered Sucessfully", HttpStatus.CREATED);
 	}
-											
-												//Put Mapping //
-	
+
+	// Put Mapping //
+
 	// User to update LoginId
-	
-	@PutMapping("/updatelogin")			
+
+	@PutMapping("/updatelogin")
 	public ResponseEntity<?> updateLoginId(@RequestBody Login login) throws DuplicateUserException {
-			Optional<Login> upt = loginrepo.findById(login.getLoginId());
-			if (!upt.isPresent())
-				return new ResponseEntity<String>("User with Id" + login.getLoginId()+ "not exists", null);
-			loginrepo.save(login);
-			throw new DuplicateUserException("User with Id " +login.getLoginId()+ "Updated Login Id successfully");
+		Optional<Login> upt = loginrepo.findById(login.getLoginId());
+		if (!upt.isPresent())
+			return new ResponseEntity<String>("User with Id" + login.getLoginId() + "not exists", null);
+		loginrepo.save(login);
+		// throw new DuplicateUserException("User with Id " +login.getLoginId()+
+		// "Updated Login Id successfully");
+		return new ResponseEntity<String>("User with Id " + login.getLoginId() + "Updated Login Id successfully",
+				HttpStatus.CREATED);
+
 	}
-	
+
 	// User to update password
-	
-	@PutMapping("/updatepass")			
+
+	@PutMapping("/updatepass")
 	public ResponseEntity<?> updatePassword(@RequestBody Login login) throws DuplicateUserException {
-			Optional<Login> upass = loginrepo.findById(login.getPassword());
-			if (!upass.isPresent())
-				return new ResponseEntity<String>("User with Id" + login.getLoginId()+ "not exists", null);
-			loginrepo.save(login);
-			throw new DuplicateUserException("User with Login Id " +login.getLoginId()+ "Updated  Password successfully");
+		Optional<Login> upass = loginrepo.findById(login.getPassword());
+		if (!upass.isPresent())
+			return new ResponseEntity<String>("User with Id" + login.getLoginId() + "not exists", null);
+		loginrepo.save(login);
+		// throw new DuplicateUserException("User with Login Id " +login.getLoginId()+
+		// "Updated Password successfully");
+		return new ResponseEntity<String>("User with Login Id " + login.getLoginId() + "Updated  Password successfully",
+				HttpStatus.CREATED);
+
 	}
-											
-												// Delete Mapping //
-	
+
+	// Delete Mapping //
+
 	// User to delete
-	
-	@DeleteMapping("/delete")		
-	public ResponseEntity<?> deleteUser(@RequestBody long userId )throws NoSuchUserException{
+
+	@DeleteMapping("/delete")
+	public ResponseEntity<?> deleteUser(@RequestBody long userId) throws NoSuchUserException {
 		Optional<User> opt = userrepo.findById(userId);
 		if (opt.isPresent()) {
 			userrepo.deleteById(userId);
-			return new ResponseEntity<String>("User with Id"+userId+ "deleted succesfully",HttpStatus.OK);
-		}else
-			throw new NoSuchUserException("User with" +userId+ "not exists");
-	}
-	
-	
-	
-}
+			return new ResponseEntity<String>("User with Id" + userId + "deleted succesfully", HttpStatus.OK);
+		} else
+			// throw new NoSuchUserException("User with" +userId+ "not exists");
+			return new ResponseEntity<String>("User with" + userId + "not exists", HttpStatus.CREATED);
 
+	}
+
+}
