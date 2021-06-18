@@ -29,10 +29,10 @@ public class ParkingController {
 	@Autowired
 	ParkingService service;
 	ParkingFloor fs;
-	ParkingSlots ps;
 
 	@GetMapping("{parkingId}")
-	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId) {
+	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId)
+			throws NoSuchParkingSlotException {
 
 		Optional<ParkingSlots> ParkingSlots = service.getParkingSlotsById(parkingId);
 
@@ -46,39 +46,41 @@ public class ParkingController {
 			throw new ParkingSlotNotAvailableException("Booking slots are not available");
 		}
 		service.bookParkingSlot(slot);
-		return new ResponseEntity<String> ("parkingSlot booked", HttpStatus.OK);
+		return new ResponseEntity<String>("parkingSlot booked", HttpStatus.OK);
 	}
 
-	@GetMapping("checkavail/{date}/{time}")
-	public ResponseEntity<?> checkAvailability(@PathVariable ("date") Date date ,@PathVariable ("time") String time) throws ParkingSlotNotAvailableException {
-		if (!service.checkAvailability(date, time)) {
-			throw new ParkingSlotNotAvailableException("Slot unavailable");
+	@GetMapping("/checkavail")
+	public boolean checkAvailability(Date date, String time) throws ParkingSlotNotAvailableException {
+		if (service.checkAvailability(date, time)) {
+			boolean avail = service.checkAvailability(date, time);
+			return avail;
 		}
-		service.checkAvailability(date, time);
-		return new ResponseEntity<String>("Slot available",HttpStatus.OK);
+		return false;
 
 	}
 
-	@DeleteMapping("cancel")
-	public ResponseEntity<String> cancelParkingSlotBooking(@RequestBody ParkingSlots slot) throws NoSuchParkingSlotException {
-		long p = ps.getParkingSlotId();
-		if (!(p == slot.getParkingSlotId())) {
-			throw new NoSuchParkingSlotException("Parking slot does not exist");
+	@DeleteMapping("/cancel")
+	public boolean cancelParkingSlotBooking(@RequestBody ParkingSlots slot) throws NoSuchParkingSlotException {
+		if (service.cancelParkingSlotBooking(slot)) {
+			boolean cancel = service.cancelParkingSlotBooking(slot);
+			return cancel;
 		}
-		return new ResponseEntity<String>("Slot cancelled",HttpStatus.OK);
+		return false;
 
 	}
 
-	@GetMapping("allpp")
-	public ResponseEntity<List<ParkingPremise>> getAllParkingSlotsByPremise(@RequestBody ParkingPremise parkingPremise) {
-		List<ParkingPremise> p = service.getAllParkingSlotsByPremise(parkingPremise);
-		return new ResponseEntity<List<ParkingPremise>>(p, HttpStatus.OK);
-	}
+//	@GetMapping("allpp")
+//	public ResponseEntity<?> getAllParkingSlotsByPremise(ParkingPremise parkingPremise) {
+//		List<ParkingSlots> ls = service.getAllParkingSlotsByPremise(parkingPremise);
+//		
+//	
+//	}
 
 	@GetMapping("{pslots}")
-	public ResponseEntity<Optional<ParkingSlots>> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
+	public Optional<ParkingSlots> getParkingSlotsById(@PathVariable("pslots") @RequestBody long parkingSlotId)
+			throws NoSuchParkingSlotException {
 		Optional<ParkingSlots> ps = service.getParkingSlotsById(parkingSlotId);
-		return new ResponseEntity<Optional<ParkingSlots>>(ps, HttpStatus.OK);
+		return ps;
 	}
 
 }

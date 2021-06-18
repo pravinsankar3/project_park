@@ -27,7 +27,7 @@ import com.psap.service.ParkingService;
 import com.psap.service.UserService;
 
 @RestController
-@RequestMapping
+@RequestMapping("/admin")
 public class AdminController {
 
 	@Autowired
@@ -46,8 +46,9 @@ public class AdminController {
 	}
 
 	// Add Parking Floor
-	@PostMapping("{addpfloor}")
-	public ResponseEntity<String> addParkingFloor(@PathVariable("addpfloor") ParkingFloor parkingFloor) throws DuplicateParkingFloorException {
+	@PostMapping("addpfloor")
+	public ResponseEntity<String> addParkingFloor(@RequestBody ParkingFloor parkingFloor)
+			throws DuplicateParkingFloorException {
 		if (aservice.addParkingFloor(parkingFloor))
 			return new ResponseEntity<String>("Parking Floor Added", HttpStatus.OK);
 		else
@@ -56,27 +57,22 @@ public class AdminController {
 
 	// Modify Parking Premise
 	@PutMapping("{modifypp}")
-	public ResponseEntity<String> modifyParkingPremise(@PathVariable("modifypp")@RequestBody ParkingPremise parkingPremise) {
+	public ResponseEntity<String> modifyParkingPremise(
+			@PathVariable("modifypp") @RequestBody ParkingPremise parkingPremise) {
 		aservice.modifyParkingPremise(parkingPremise);
-		return new ResponseEntity<String>("Parking premise modified",HttpStatus.OK);
+		return new ResponseEntity<String>("Parking premise modified", HttpStatus.OK);
 	}
 	// Block User
 
 	@DeleteMapping("/blockuser")
-	public ResponseEntity<String> blockUser(User user) throws NoSuchUserException {
+	public ResponseEntity<String> blockUser(@RequestBody User user) throws NoSuchUserException {
 		if (!(user.isActive())) {
 			throw new NoSuchUserException("User" + user.getUserId() + "Is not active");
 		}
 		long uid = user.getUserId();
 		uservice.deleteUserById(uid);
-		return new ResponseEntity<String>("UserId:"+user.getUserId()+"blocked",HttpStatus.OK);
+		return new ResponseEntity<String>("UserId:" + user.getUserId() + "blocked", HttpStatus.OK);
 
 	}
-	
-	
 
-   
-   
- 
-   
 }
