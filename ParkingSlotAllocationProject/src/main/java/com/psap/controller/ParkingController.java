@@ -17,66 +17,67 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.psap.exceptions.NoSuchParkingSlotException;
 import com.psap.exceptions.ParkingSlotNotAvailableException;
+import com.psap.model.ParkingFloor;
 import com.psap.model.ParkingPremise;
 import com.psap.model.ParkingSlots;
 import com.psap.service.ParkingService;
 
-
 @RestController
 @RequestMapping("ParkingSlot/Parking")
 public class ParkingController {
-		
-		@Autowired
-		ParkingService service;
-		
-		@GetMapping("{parkingId}")
-		public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId) {
-			
-			Optional<ParkingSlots> ParkingSlots = service.getParkingSlotsById(parkingId);
-			
-		    return new ResponseEntity<ParkingSlots>(ParkingSlots.get(),HttpStatus.OK);
-}
-		
-		@PostMapping("{parkingId}")
-		public boolean  bookparking(@PathVariable("parkingId")@RequestBody ParkingSlots slot) throws ParkingSlotNotAvailableException{
-			 if (!service.bookParkingSlot(slot) == false) {
-				 throw new ParkingSlotNotAvailableException("Booking slots are not available");
-			 }
-			 service.bookParkingSlot(slot);
-			return true;
+
+	@Autowired
+	ParkingService service;
+	ParkingFloor fs;
+
+	@GetMapping("{parkingId}")
+	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId) {
+
+		Optional<ParkingSlots> ParkingSlots = service.getParkingSlotsById(parkingId);
+
+		return new ResponseEntity<ParkingSlots>(ParkingSlots.get(), HttpStatus.OK);
+	}
+
+	@PostMapping("{parkingId}")
+	public ResponseEntity<String> bookparking(@PathVariable("parkingId") @RequestBody ParkingSlots slot)
+			throws ParkingSlotNotAvailableException {
+		if (!service.bookParkingSlot(slot) == false) {
+			throw new ParkingSlotNotAvailableException("Booking slots are not available");
 		}
-		
-		@GetMapping("/checkavail")
-		public boolean checkAvailability(Date date, String time) throws ParkingSlotNotAvailableException{
-			if (service.checkAvailability(date, time)) {
-				boolean avail = service.checkAvailability(date, time);
-				return avail;
-			}return false;
-			
+		service.bookParkingSlot(slot);
+		return new ResponseEntity<String> ("parkingSlot booked", HttpStatus.OK);
+	}
+
+	@GetMapping("/checkavail")
+	public boolean checkAvailability(Date date, String time) throws ParkingSlotNotAvailableException {
+		if (service.checkAvailability(date, time)) {
+			boolean avail = service.checkAvailability(date, time);
+			return avail;
 		}
-		
-		@DeleteMapping("/cancel")
-		public boolean cancelParkingSlotBooking(ParkingSlots slot) throws NoSuchParkingSlotException{
-			if (service.cancelParkingSlotBooking(slot)) {
-				boolean cancel = service.cancelParkingSlotBooking(slot);
-				return cancel;
-			}return false;
-			
+		return false;
+
+	}
+
+	@DeleteMapping("/cancel")
+	public boolean cancelParkingSlotBooking(ParkingSlots slot) throws NoSuchParkingSlotException {
+		if (service.cancelParkingSlotBooking(slot)) {
+			boolean cancel = service.cancelParkingSlotBooking(slot);
+			return cancel;
 		}
-		
-		
-		@GetMapping("allpp")
-		public List<ParkingPremise> getAllParkingSlotsByPremise(ParkingPremise parkingPremise){
-			List< ParkingPremise> pp = service.getAllParkingSlotsByPremise(parkingPremise);
-			return pp;
-		}
-		
-		
-		
-		@GetMapping("{pslots}")
-		public Optional<ParkingSlots> getParkingSlotsById(@PathVariable("pslots")long parkingSlotId){
-			Optional<ParkingSlots> ps = service.getParkingSlotsById(parkingSlotId);
-			return ps;
-		}
-		
+		return false;
+
+	}
+
+	@GetMapping("allpp")
+	public ResponseEntity<?> getAllParkingSlotsByPremise(ParkingPremise parkingPremise) {
+		ParkingFloor p = service.getAllParkingSlotsByPremise(parkingPremise.);
+		return new ResponseEntity<?>(fs.getNumberOfParkingSlots() , HttpStatus.OK);
+	}
+
+	@GetMapping("{pslots}")
+	public Optional<ParkingSlots> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
+		Optional<ParkingSlots> ps = service.getParkingSlotsById(parkingSlotId);
+		return ps;
+	}
+
 }
