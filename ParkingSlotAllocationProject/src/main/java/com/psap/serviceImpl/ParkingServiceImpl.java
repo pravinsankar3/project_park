@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.psap.exceptions.NoSuchParkingFloorException;
 import com.psap.exceptions.NoSuchParkingSlotException;
 import com.psap.exceptions.ParkingSlotNotAvailableException;
 import com.psap.model.Address;
@@ -30,14 +31,18 @@ public class ParkingServiceImpl implements ParkingService {
 	ParkingSlotsRepository parkSlotsRepo;
 	@Autowired
 	AddressRepository addressRepo; 
+	ParkingSlots slots;
 
 	@Override
 	public boolean checkAvailability(Date date, String time) throws ParkingSlotNotAvailableException {
-		ParkingSlots value = parkSlotsRepo.findByParkingDateAndParkingTime(new Date() , "12:00");
-		if(value == null) {
-		return true;
+		Date d = slots.getParkingDate();
+		String a = slots.getParkingTime();
+		if(d == date) {
+			if(a == time) {
+				throw new ParkingSlotNotAvailableException("Parking slot not available");
+			}
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -58,17 +63,11 @@ public class ParkingServiceImpl implements ParkingService {
 			return true;
 	}
 
-//	@Override
-//	public Optional<ParkingPremise> getAllParkingSlotsByPremise(ParkingPremise parkingPremise) {
-//		Optional<ParkingPremise> p = parkPremiseRepo.findById(parkingPremise.getParkingPremiseId());
-//		return p;
-//	}
-
 	@Override
-	public Optional<ParkingFloor> getAllParkingSlotsByFloor(ParkingFloor parkingFloor) {
-		Optional<ParkingFloor> p = parkFloorRepo.findById(parkingFloor.getNumberOfParkingSlots());
-		return p;
+	public List<ParkingPremise> getAllParkingSlotsByPremise(ParkingPremise parkingPremise) {
+		return parkPremiseRepo.findAll();
 	}
+
 
 	@Override
 	public Optional<ParkingSlots> getParkingSlotsById(long parkingSlotId) {
