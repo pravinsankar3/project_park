@@ -27,7 +27,7 @@ import com.psap.service.ParkingService;
 import com.psap.service.UserService;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("admin")
 public class AdminController {
 
 	@Autowired
@@ -38,41 +38,38 @@ public class AdminController {
 	AdminService aservice;
 
 	// Get all parking floors
-	@GetMapping("/allpfloor")
+	@GetMapping("allpfloor")
 
-	public List<ParkingFloor> getAllParkingFloors(long parkingPremiseId) {
+	public ResponseEntity<List<ParkingFloor>> getAllParkingFloors(@RequestBody long parkingPremiseId) {
 		List<ParkingFloor> pf = aservice.getAllParkingFloors(parkingPremiseId);
-		return pf;
+		return new ResponseEntity<List<ParkingFloor>>(pf, HttpStatus.OK);
 	}
 
 	// Add Parking Floor
 	@PostMapping("addpfloor")
-	public ResponseEntity<String> addParkingFloor(@RequestBody ParkingFloor parkingFloor)
-			throws DuplicateParkingFloorException {
-		if (aservice.addParkingFloor(parkingFloor))
+	public ResponseEntity<String> addParkingFloor(@RequestBody ParkingFloor parkingFloor) throws DuplicateParkingFloorException {
+		if (!aservice.addParkingFloor(parkingFloor))
+			throw new  DuplicateParkingFloorException("Parking floor already exists");
+			else
 			return new ResponseEntity<String>("Parking Floor Added", HttpStatus.OK);
-		else
-			return new ResponseEntity<String>("Parking Floor Not Added", HttpStatus.OK);
 	}
 
 	// Modify Parking Premise
-	@PutMapping("{modifypp}")
-	public ResponseEntity<String> modifyParkingPremise(
-			@PathVariable("modifypp") @RequestBody ParkingPremise parkingPremise) {
+	@PutMapping("modifypp")
+	public ResponseEntity<String> modifyParkingPremise(@RequestBody ParkingPremise parkingPremise) {
 		aservice.modifyParkingPremise(parkingPremise);
-		return new ResponseEntity<String>("Parking premise modified", HttpStatus.OK);
+		return new ResponseEntity<String>("Parking premise modified",HttpStatus.OK);
 	}
 	// Block User
 
-	@DeleteMapping("/blockuser")
+	@DeleteMapping("blockuser")
 	public ResponseEntity<String> blockUser(@RequestBody User user) throws NoSuchUserException {
 		if (!(user.isActive())) {
 			throw new NoSuchUserException("User" + user.getUserId() + "Is not active");
 		}
 		long uid = user.getUserId();
 		uservice.deleteUserById(uid);
-		return new ResponseEntity<String>("UserId:" + user.getUserId() + "blocked", HttpStatus.OK);
+		return new ResponseEntity<String>("UserId:"+user.getUserId()+"blocked",HttpStatus.OK);
 
 	}
-
-}
+	}
