@@ -19,7 +19,7 @@ public interface ParkingService {
 	public boolean cancelParkingSlotBooking(ParkingSlots slot) throws NoSuchParkingSlotException;
 	
 	public List<ParkingPremise> getAllParkingSlotsByPremise(ParkingPremise parkingPremise);
-	public Optional<ParkingSlots> getParkingSlotsById(long parkingSlotId);
+	public Optional<ParkingSlots> getParkingSlotsById(long parkingSlotId) throws NoSuchParkingSlotException;
 	
 	
 }

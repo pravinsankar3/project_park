@@ -46,35 +46,35 @@ public class AdminController {
 	}
 
 	// Add Parking Floor
-	@PostMapping("/addpfloor")
-	public boolean addParkingFloor(ParkingFloor parkingFloor) throws DuplicateParkingFloorException {
+	@PostMapping("{addpfloor}")
+	public ResponseEntity<String> addParkingFloor(@PathVariable("addpfloor") ParkingFloor parkingFloor) throws DuplicateParkingFloorException {
 		if (aservice.addParkingFloor(parkingFloor))
-			return true;
+			return new ResponseEntity<String>("Parking Floor Added", HttpStatus.OK);
 		else
-			return false;
+			return new ResponseEntity<String>("Parking Floor Not Added", HttpStatus.OK);
 	}
 
 	// Modify Parking Premise
 	@PutMapping("{modifypp}")
-	public ResponseEntity<ParkingPremise> modifyParkingPremise(@PathVariable("modifypp")@RequestBody ParkingPremise parkingPremise) {
-		ParkingPremise pp = aservice.modifyParkingPremise(parkingPremise);
-		return new ResponseEntity<ParkingPremise>(HttpStatus.OK);
+	public ResponseEntity<String> modifyParkingPremise(@PathVariable("modifypp")@RequestBody ParkingPremise parkingPremise) {
+		aservice.modifyParkingPremise(parkingPremise);
+		return new ResponseEntity<String>("Parking premise modified",HttpStatus.OK);
 	}
 	// Block User
 
-	@DeleteMapping("/deleteuser")
-	public boolean blockUser(User user) throws NoSuchUserException {
+	@DeleteMapping("/blockuser")
+	public ResponseEntity<String> blockUser(User user) throws NoSuchUserException {
 		if (!(user.isActive())) {
 			throw new NoSuchUserException("User" + user.getUserId() + "Is not active");
 		}
 		long uid = user.getUserId();
 		uservice.deleteUserById(uid);
-		return true;
+		return new ResponseEntity<String>("UserId:"+user.getUserId()+"blocked",HttpStatus.OK);
 
 	}
 	
 	
-   @DeleteMapping("/removeParkingPremises")
+
    
    
  
