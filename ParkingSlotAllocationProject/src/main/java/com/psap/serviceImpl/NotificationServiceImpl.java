@@ -11,7 +11,7 @@ import com.psap.repository.UserRepository;
 import com.psap.repository.VehicleRepository;
 import com.psap.service.NotificationService;
 
-public class NotificationSerceImpl implements NotificationService {
+public class NotificationServiceImpl implements NotificationService {
 	
 	@Autowired
 	UserRepository urepo;
