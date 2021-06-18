@@ -24,7 +24,7 @@ import com.psap.repository.ParkingPremiseRepository;
 import com.psap.repository.UserRepository;
 
 @SpringBootTest
-class Admin {
+class AdminServiceImplTest {
 
 	@Autowired
 	LoginRepository lr;
@@ -106,7 +106,16 @@ class Admin {
 		pf.save(pfs);
 		assertNotNull(pf.findById(pfs.getParkingFloorId()));
 	}
-	
+	@Order(10)
+	public void getParkingFloorByIdTest() {
+		ParkingFloor pfs  =	pf.findByParkingFloorId(1);	
+		assertEquals(pfs.getParkingFloorId(),1);
+	}
+	@Order(11)
+	public void getParkingFloorByNumberTest() {
+		ParkingFloor pfs  =	pf.findByFloorNumber("1A");	
+		assertEquals(pfs.getFloorNumber(),"1A");
+	}
 	
 }
 		
