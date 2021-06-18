@@ -24,7 +24,7 @@ import com.psap.repository.ParkingPremiseRepository;
 import com.psap.repository.UserRepository;
 
 @SpringBootTest
-class ParkingSlotAllocationProjectApplicationTests {
+class Admin {
 
 	@Autowired
 	LoginRepository lr;
