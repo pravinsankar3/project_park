@@ -29,6 +29,7 @@ public class ParkingController {
 	@Autowired
 	ParkingService service;
 	ParkingFloor fs;
+	ParkingSlots ps;
 
 	@GetMapping("{parkingId}")
 	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId) {
@@ -48,36 +49,36 @@ public class ParkingController {
 		return new ResponseEntity<String> ("parkingSlot booked", HttpStatus.OK);
 	}
 
-	@GetMapping("/checkavail")
-	public boolean checkAvailability(Date date, String time) throws ParkingSlotNotAvailableException {
-		if (service.checkAvailability(date, time)) {
-			boolean avail = service.checkAvailability(date, time);
-			return avail;
+	@GetMapping("checkavail/{date}/{time}")
+	public ResponseEntity<?> checkAvailability(@PathVariable ("date") Date date ,@PathVariable ("time") String time) throws ParkingSlotNotAvailableException {
+		if (!service.checkAvailability(date, time)) {
+			throw new ParkingSlotNotAvailableException("Slot unavailable");
 		}
-		return false;
+		service.checkAvailability(date, time);
+		return new ResponseEntity<String>("Slot available",HttpStatus.OK);
 
 	}
 
-	@DeleteMapping("/cancel")
-	public boolean cancelParkingSlotBooking(ParkingSlots slot) throws NoSuchParkingSlotException {
-		if (service.cancelParkingSlotBooking(slot)) {
-			boolean cancel = service.cancelParkingSlotBooking(slot);
-			return cancel;
+	@DeleteMapping("cancel")
+	public ResponseEntity<String> cancelParkingSlotBooking(@RequestBody ParkingSlots slot) throws NoSuchParkingSlotException {
+		long p = ps.getParkingSlotId();
+		if (!(p == slot.getParkingSlotId())) {
+			throw new NoSuchParkingSlotException("Parking slot does not exist");
 		}
-		return false;
+		return new ResponseEntity<String>("Slot cancelled",HttpStatus.OK);
 
 	}
 
 	@GetMapping("allpp")
-	public ResponseEntity<?> getAllParkingSlotsByPremise(ParkingPremise parkingPremise) {
-		ParkingFloor p = service.getAllParkingSlotsByPremise(parkingPremise.);
-		return new ResponseEntity<?>(fs.getNumberOfParkingSlots() , HttpStatus.OK);
+	public ResponseEntity<List<ParkingPremise>> getAllParkingSlotsByPremise(@RequestBody ParkingPremise parkingPremise) {
+		List<ParkingPremise> p = service.getAllParkingSlotsByPremise(parkingPremise);
+		return new ResponseEntity<List<ParkingPremise>>(p, HttpStatus.OK);
 	}
 
 	@GetMapping("{pslots}")
-	public Optional<ParkingSlots> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
+	public ResponseEntity<Optional<ParkingSlots>> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
 		Optional<ParkingSlots> ps = service.getParkingSlotsById(parkingSlotId);
-		return ps;
+		return new ResponseEntity<Optional<ParkingSlots>>(ps, HttpStatus.OK);
 	}
 
 }
