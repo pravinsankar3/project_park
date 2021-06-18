@@ -68,5 +68,11 @@ public class AdminController {
 		return true;
 
 	}
-
+	
+	
+   @DeleteMapping("/removeParkingPremises")
+   
+   
+ 
+   
 }
