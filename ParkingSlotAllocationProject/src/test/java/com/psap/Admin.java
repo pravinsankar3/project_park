@@ -50,7 +50,7 @@ class Admin {
 		lr.save(l);
 		assertNotNull(lr.findById(l.getLoginId()));
 	}
-	
+	@Order(2)
 	public void blockUserTest() {
 		Optional<User> u=ur.findById((long) 1234);
 		if(u!=null) {				
@@ -59,7 +59,7 @@ class Admin {
 		Optional<User> u1=ur.findById((long) 1234);			
 		assertThat(u1==null);
 	}
-	
+	@Order(3)
 	public void addParkingPremiseTest() {
 		ParkingPremise pps = new ParkingPremise();
 		pps.setParkingPremiseId(1);
@@ -68,26 +68,26 @@ class Admin {
 		pp.save(pps);
 		assertNotNull(pp.findById(pps.getParkingPremiseId()));
 	}
-	
+	@Order(4)
 	public void getParkingPremiseByIdTest() {
 		ParkingPremise pps  =	pp.findByParkingPremiseId(1);		
 		assertEquals(pps.getParkingPremiseId(),1);								
 	}
-	
+	@Order(5)
 	public void getParkingPremiseByNameTest() {
 		ParkingPremise pps = pp.findByParkingPremiseName("New Age Parking Solutions");
 		assertEquals(pps.getParkingPremiseName(),"New Age Parking Solutions");
 	}
-	
+	@Order(6)
 	public void getAllParkingPremiseTest() {
 		List<ParkingPremise> pps  = pp.findAll();			
 	    assertThat(pps.size()>=0);
 	}
-	
+	@Order(7)
 	public void modifyParkingPremiseTest() {
 		
 	}
-	
+	@Order(8)
 	public void removeParkingPremiseTest() {
 		ParkingPremise pps = pp.findByParkingPremiseId(1);
 		if(pps!=null) {				
@@ -96,7 +96,7 @@ class Admin {
 		Optional<User> u1=ur.findById((long) 1);			
 		assertThat(u1==null);
 	}
-	
+	@Order(9)
 	public void addParkingFloorTest() {
 		ParkingFloor pfs = new ParkingFloor();
 		pfs.setParkingFloorId(1);
