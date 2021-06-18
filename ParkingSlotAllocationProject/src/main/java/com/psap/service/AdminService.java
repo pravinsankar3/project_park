@@ -2,6 +2,8 @@ package com.psap.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.psap.exceptions.DuplicateParkingFloorException;
 import com.psap.exceptions.DuplicateParkingPremiseException;
 import com.psap.exceptions.InvalidLoginCredintialException;
@@ -13,6 +15,7 @@ import com.psap.model.ParkingFloor;
 import com.psap.model.ParkingPremise;
 import com.psap.model.User;
 
+@Service
 public interface AdminService {
 	public boolean login(Login login) throws InvalidLoginCredintialException;
 	public boolean blockUser(User user) throws NoSuchUserException;

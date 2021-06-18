@@ -22,7 +22,7 @@ import com.psap.service.ParkingService;
 
 @Service
 public class ParkingServiceImpl implements ParkingService {
-	
+
 	@Autowired
 	ParkingPremiseRepository parkPremiseRepo;
 	@Autowired
@@ -30,37 +30,33 @@ public class ParkingServiceImpl implements ParkingService {
 	@Autowired
 	ParkingSlotsRepository parkSlotsRepo;
 	@Autowired
-	AddressRepository addressRepo; 
+	AddressRepository addressRepo;
 	ParkingSlots slots;
 
 	@Override
 	public boolean checkAvailability(Date date, String time) throws ParkingSlotNotAvailableException {
-		Date d = slots.getParkingDate();
-		String a = slots.getParkingTime();
-		if(d == date) {
-			if(a == time) {
-				throw new ParkingSlotNotAvailableException("Parking slot not available");
-			}
-		}
+		ParkingSlots p = parkSlotsRepo.findByParkingDateAndParkingTime(date, time);
+		if (p != null)
+			return false;
 		return true;
 	}
 
 	@Override
 	public boolean bookParkingSlot(ParkingSlots slot) throws ParkingSlotNotAvailableException {
 		Optional<ParkingSlots> p = parkSlotsRepo.findById(slot.getParkingSlotId());
-		if(p.isPresent())
+		if (p.isPresent())
 			throw new ParkingSlotNotAvailableException("Parking slot is occupied");
-			parkSlotsRepo.save(slot);
-			return true;
+		parkSlotsRepo.save(slot);
+		return true;
 	}
 
 	@Override
 	public boolean cancelParkingSlotBooking(ParkingSlots slot) throws NoSuchParkingSlotException {
 		Optional<ParkingSlots> p = parkSlotsRepo.findById(slot.getParkingSlotId());
-		if(!p.isPresent())
+		if (!p.isPresent())
 			throw new NoSuchParkingSlotException("Parking slot is not available");
-			parkSlotsRepo.delete(slot);
-			return true;
+		parkSlotsRepo.delete(slot);
+		return true;
 	}
 
 	@Override
@@ -68,13 +64,12 @@ public class ParkingServiceImpl implements ParkingService {
 		return parkPremiseRepo.findAll();
 	}
 
-
 	@Override
-	public Optional<ParkingSlots> getParkingSlotsById(long parkingSlotId) throws NoSuchParkingSlotException {
-		
+	public Optional<ParkingSlots> getParkingSlotsById(long parkingSlotId) {
+
 		Optional<ParkingSlots> slot = parkSlotsRepo.findById(parkingSlotId);
-		if(!slot.isPresent())
-			throw new NoSuchParkingSlotException("Slot With Id "+ parkingSlotId +" Not Found");
+		if (!slot.isPresent())
+			throw new NoSuchParkingSlotException("Slot With Id " + parkingSlotId + " Not Found");
 		return slot;
 	}
 

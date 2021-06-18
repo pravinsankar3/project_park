@@ -1,5 +1,7 @@
 package com.psap.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,10 +31,10 @@ public class ParkingController {
 	@Autowired
 	ParkingService service;
 	ParkingFloor fs;
+	ParkingSlots ps;
 
 	@GetMapping("{parkingId}")
-	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId)
-			throws NoSuchParkingSlotException {
+	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId) {
 
 		Optional<ParkingSlots> ParkingSlots = service.getParkingSlotsById(parkingId);
 
@@ -46,41 +48,43 @@ public class ParkingController {
 			throw new ParkingSlotNotAvailableException("Booking slots are not available");
 		}
 		service.bookParkingSlot(slot);
-		return new ResponseEntity<String>("parkingSlot booked", HttpStatus.OK);
+		return new ResponseEntity<String> ("parkingSlot booked", HttpStatus.OK);
 	}
 
-	@GetMapping("/checkavail")
-	public boolean checkAvailability(Date date, String time) throws ParkingSlotNotAvailableException {
-		if (service.checkAvailability(date, time)) {
-			boolean avail = service.checkAvailability(date, time);
-			return avail;
+	@GetMapping("checkavail/{date}/{time}")
+	public ResponseEntity<?> checkAvailability(@PathVariable ("date") String date ,@PathVariable ("time") String time) throws ParkingSlotNotAvailableException, ParseException {
+		String pattern = "yyyy-MM-dd";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+		Date date1 = simpleDateFormat.parse(date);
+		if (!service.checkAvailability(date1, time)) {
+			throw new ParkingSlotNotAvailableException("Slot unavailable");
 		}
-		return false;
+		service.checkAvailability(date1, time);
+		return new ResponseEntity<String>("Slot available",HttpStatus.OK);
 
 	}
 
-	@DeleteMapping("/cancel")
-	public boolean cancelParkingSlotBooking(@RequestBody ParkingSlots slot) throws NoSuchParkingSlotException {
-		if (service.cancelParkingSlotBooking(slot)) {
-			boolean cancel = service.cancelParkingSlotBooking(slot);
-			return cancel;
+	@DeleteMapping("cancel")
+	public ResponseEntity<String> cancelParkingSlotBooking(@RequestBody ParkingSlots slot) throws NoSuchParkingSlotException {
+		long p = ps.getParkingSlotId();
+		if (!(p == slot.getParkingSlotId())) {
+			throw new NoSuchParkingSlotException("Parking slot does not exist");
 		}
-		return false;
+		return new ResponseEntity<String>("Slot cancelled",HttpStatus.OK);
 
 	}
 
-//	@GetMapping("allpp")
-//	public ResponseEntity<?> getAllParkingSlotsByPremise(ParkingPremise parkingPremise) {
-//		List<ParkingSlots> ls = service.getAllParkingSlotsByPremise(parkingPremise);
-//		
-//	
-//	}
+	@GetMapping("allpp")
+	public ResponseEntity<List<ParkingPremise>> getAllParkingSlotsByPremise(@RequestBody ParkingPremise parkingPremise) {
+		List<ParkingPremise> p = service.getAllParkingSlotsByPremise(parkingPremise);
+		return new ResponseEntity<List<ParkingPremise>>(p, HttpStatus.OK);
+	}
 
 	@GetMapping("{pslots}")
-	public Optional<ParkingSlots> getParkingSlotsById(@PathVariable("pslots") @RequestBody long parkingSlotId)
-			throws NoSuchParkingSlotException {
+	public ResponseEntity<Optional<ParkingSlots>> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
 		Optional<ParkingSlots> ps = service.getParkingSlotsById(parkingSlotId);
-		return ps;
+		return new ResponseEntity<Optional<ParkingSlots>>(ps, HttpStatus.OK);
 	}
 
 }
