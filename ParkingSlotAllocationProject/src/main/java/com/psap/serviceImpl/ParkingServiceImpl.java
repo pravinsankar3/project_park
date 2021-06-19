@@ -33,6 +33,7 @@ public class ParkingServiceImpl implements ParkingService {
 	AddressRepository addressRepo;
 	ParkingSlots slots;
 
+	//check parking slot availability 
 	@Override
 	public boolean checkAvailability(Date date, String time) throws ParkingSlotNotAvailableException {
 		ParkingSlots p = parkSlotsRepo.findByParkingDateAndParkingTime(date, time);
