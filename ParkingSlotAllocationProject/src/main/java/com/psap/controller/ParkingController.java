@@ -33,6 +33,8 @@ public class ParkingController {
 	ParkingFloor fs;
 	ParkingSlots ps;
 
+//Check Slot availability
+
 	@GetMapping("checkavail/{date}/{time}")
 	public ResponseEntity<?> checkAvailability(@PathVariable("date") String date, @PathVariable("time") String time)
 			throws ParkingSlotNotAvailableException, ParseException {
@@ -47,6 +49,8 @@ public class ParkingController {
 		return new ResponseEntity<String>("Slot available", HttpStatus.OK);
 	}
 
+//Book Slot
+
 	@PostMapping("{parkingId}")
 	public ResponseEntity<String> bookparking(@PathVariable("parkingId") @RequestBody ParkingSlots slot)
 			throws ParkingSlotNotAvailableException {
@@ -56,6 +60,8 @@ public class ParkingController {
 		service.bookParkingSlot(slot);
 		return new ResponseEntity<String>("parkingSlot booked", HttpStatus.OK);
 	}
+
+//Cancel Slot
 
 	@DeleteMapping("cancel")
 	public ResponseEntity<String> cancelParkingSlotBooking(@RequestBody ParkingSlots slot)
@@ -68,6 +74,8 @@ public class ParkingController {
 
 	}
 
+//Display all Slot by Premise
+
 	@GetMapping("allpp")
 	public ResponseEntity<List<ParkingPremise>> getAllParkingSlotsByPremise(
 			@RequestBody ParkingPremise parkingPremise) {
@@ -75,18 +83,19 @@ public class ParkingController {
 		return new ResponseEntity<List<ParkingPremise>>(p, HttpStatus.OK);
 	}
 
-	@GetMapping("{pslots}")
-	public ResponseEntity<Optional<ParkingSlots>> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
-		Optional<ParkingSlots> ps = service.getParkingSlotsById(parkingSlotId);
-		return new ResponseEntity<Optional<ParkingSlots>>(ps, HttpStatus.OK);
-	}
+//Display Slot by ID
 
 	@GetMapping("{parkingId}")
 	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId) {
 
 		Optional<ParkingSlots> ParkingSlots = service.getParkingSlotsById(parkingId);
-
 		return new ResponseEntity<ParkingSlots>(ParkingSlots.get(), HttpStatus.OK);
 	}
+
+//	@GetMapping("{pslots}")
+//	public ResponseEntity<Optional<ParkingSlots>> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
+//		Optional<ParkingSlots> ps = service.getParkingSlotsById(parkingSlotId);
+//		return new ResponseEntity<Optional<ParkingSlots>>(ps, HttpStatus.OK);
+//	}
 
 }

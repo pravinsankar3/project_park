@@ -7,11 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.psap.exceptions.NoSuchParkingFloorException;
 import com.psap.exceptions.NoSuchParkingSlotException;
 import com.psap.exceptions.ParkingSlotNotAvailableException;
-import com.psap.model.Address;
-import com.psap.model.ParkingFloor;
 import com.psap.model.ParkingPremise;
 import com.psap.model.ParkingSlots;
 import com.psap.repository.AddressRepository;
@@ -33,7 +30,8 @@ public class ParkingServiceImpl implements ParkingService {
 	AddressRepository addressRepo;
 	ParkingSlots slots;
 
-	//check parking slot availability 
+//Check Slot availability 
+	
 	@Override
 	public boolean checkAvailability(Date date, String time) throws ParkingSlotNotAvailableException {
 		ParkingSlots p = parkSlotsRepo.findByParkingDateAndParkingTime(date, time);
@@ -42,6 +40,8 @@ public class ParkingServiceImpl implements ParkingService {
 		return true;
 	}
 
+//Book Slot
+	
 	@Override
 	public boolean bookParkingSlot(ParkingSlots slot) throws ParkingSlotNotAvailableException {
 		Optional<ParkingSlots> p = parkSlotsRepo.findById(slot.getParkingSlotId());
@@ -51,6 +51,9 @@ public class ParkingServiceImpl implements ParkingService {
 		return true;
 	}
 
+	
+//Cancel Slot
+	
 	@Override
 	public boolean cancelParkingSlotBooking(ParkingSlots slot) throws NoSuchParkingSlotException {
 		Optional<ParkingSlots> p = parkSlotsRepo.findById(slot.getParkingSlotId());
@@ -60,11 +63,15 @@ public class ParkingServiceImpl implements ParkingService {
 		return true;
 	}
 
+//Display all Slot by Premise
+	
 	@Override
 	public List<ParkingPremise> getAllParkingSlotsByPremise(ParkingPremise parkingPremise) {
 		return parkPremiseRepo.findAll();
 	}
 
+//Display Slot by ID
+	
 	@Override
 	public Optional<ParkingSlots> getParkingSlotsById(long parkingSlotId) {
 
