@@ -7,11 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.psap.exceptions.NoSuchParkingFloorException;
 import com.psap.exceptions.NoSuchParkingSlotException;
 import com.psap.exceptions.ParkingSlotNotAvailableException;
-import com.psap.model.Address;
-import com.psap.model.ParkingFloor;
 import com.psap.model.ParkingPremise;
 import com.psap.model.ParkingSlots;
 import com.psap.repository.AddressRepository;
