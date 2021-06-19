@@ -8,9 +8,9 @@ import com.psap.model.User;
 
 @Service
 public interface NotificationService {
-	public String sendRegistration(User user) throws NotificationException;
-	public String sendParkingConfirmation(User user, ParkingSlots slot) throws NotificationException;
-	public String sendParkingCancellation(User user, ParkingSlots slot) throws NotificationException;
-	public String  sendForgotPassword(User user) throws NotificationException;
-	public String  sendLoginId(User user) throws NotificationException;
+	public String sendRegistrationByEmail(User user) throws NotificationException;
+	public String sendParkingConfirmationByEmail(User user, ParkingSlots slot) throws NotificationException;
+	public String sendParkingCancellationByEmail(User user, ParkingSlots slot) throws NotificationException;
+	public String  sendForgotPasswordByEmail(User user) throws NotificationException;
+	public String  sendLoginIdByEmail(User user) throws NotificationException;
 }
