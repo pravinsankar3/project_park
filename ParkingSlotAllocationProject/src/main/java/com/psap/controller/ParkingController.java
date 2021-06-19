@@ -83,6 +83,7 @@ public class ParkingController {
 		return new ResponseEntity<List<ParkingPremise>>(p, HttpStatus.OK);
 	}
 
+<<<<<<< HEAD
 //Display Slot by ID
 
 	@GetMapping("{parkingId}")
@@ -91,6 +92,21 @@ public class ParkingController {
 		Optional<ParkingSlots> ParkingSlots = service.getParkingSlotsById(parkingId);
 		return new ResponseEntity<ParkingSlots>(ParkingSlots.get(), HttpStatus.OK);
 	}
+=======
+//	@GetMapping("{pslots}")
+//	public ResponseEntity<Optional<ParkingSlots>> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
+//		Optional<ParkingSlots> ps = service.getParkingSlotsById(parkingSlotId);
+//		return new ResponseEntity<Optional<ParkingSlots>>(ps, HttpStatus.OK);
+//	}
+
+//	@GetMapping("{parkingId}")
+//	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId) {
+//
+//		Optional<ParkingSlots> ParkingSlots = service.getParkingSlotsById(parkingId);
+//
+//		return new ResponseEntity<ParkingSlots>(ParkingSlots.get(), HttpStatus.OK);
+//	}
+>>>>>>> cc764c5738dec8530c17f21595c8033ced99ef20
 
 //	@GetMapping("{pslots}")
 //	public ResponseEntity<Optional<ParkingSlots>> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
