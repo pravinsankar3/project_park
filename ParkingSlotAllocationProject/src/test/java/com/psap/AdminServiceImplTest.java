@@ -39,17 +39,17 @@ class AdminServiceImplTest {
 	void contextLoads() {
 	}
 		
-	@Test
-	@Order(1)
-		public void loginTest() {
-		Login l = new Login(); 
-		l.setLoginId("123A");
-		l.setPassword("hello123");
-		l.setRole(new Role(1, "Programmer", "Software Programmer"));
-		l.setUser(new User(1234, "Vijay", "Janarthanan", "hello12@gmail.com", "1234567890", true));
-		lr.save(l);
-		assertNotNull(lr.findById(l.getLoginId()));
-	}
+//	@Test
+//	@Order(1)
+//		public void loginTest() {
+//		Login l = new Login(); 
+//		l.setLoginId("123A");
+//		l.setPassword("hello123");
+//		l.setRole(new Role(1, "Programmer", "Software Programmer"));
+//		l.setUser(new User(1234, "Vijay", "Janarthanan", "hello12@gmail.com", "1234567890", true));
+//		lr.save(l);
+//		assertNotNull(lr.findById(l.getLoginId()));
+//	}
 	@Order(2)
 	public void blockUserTest() {
 		Optional<User> u=ur.findById((long) 1234);
