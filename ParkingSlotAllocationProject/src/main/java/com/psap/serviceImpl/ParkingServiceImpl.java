@@ -73,7 +73,7 @@ public class ParkingServiceImpl implements ParkingService {
 //Display Slot by ID
 	
 	@Override
-	public Optional<ParkingSlots> getParkingSlotsById(long parkingSlotId) {
+	public Optional<ParkingSlots> getParkingSlotsById(long parkingSlotId) throws NoSuchParkingSlotException {
 
 		Optional<ParkingSlots> slot = parkSlotsRepo.findById(parkingSlotId);
 		if (!slot.isPresent())

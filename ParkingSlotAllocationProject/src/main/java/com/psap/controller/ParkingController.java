@@ -83,16 +83,16 @@ public class ParkingController {
 		return new ResponseEntity<List<ParkingPremise>>(p, HttpStatus.OK);
 	}
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //Display Slot by ID
 
 	@GetMapping("{parkingId}")
-	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId) {
+	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId) throws NoSuchParkingSlotException {
 
 		Optional<ParkingSlots> ParkingSlots = service.getParkingSlotsById(parkingId);
 		return new ResponseEntity<ParkingSlots>(ParkingSlots.get(), HttpStatus.OK);
 	}
-=======
+//=======
 //	@GetMapping("{pslots}")
 //	public ResponseEntity<Optional<ParkingSlots>> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
 //		Optional<ParkingSlots> ps = service.getParkingSlotsById(parkingSlotId);
@@ -106,7 +106,7 @@ public class ParkingController {
 //
 //		return new ResponseEntity<ParkingSlots>(ParkingSlots.get(), HttpStatus.OK);
 //	}
->>>>>>> cc764c5738dec8530c17f21595c8033ced99ef20
+//>>>>>>> cc764c5738dec8530c17f21595c8033ced99ef20
 
 //	@GetMapping("{pslots}")
 //	public ResponseEntity<Optional<ParkingSlots>> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
