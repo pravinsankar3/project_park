@@ -30,7 +30,8 @@ public class ParkingServiceImpl implements ParkingService {
 	AddressRepository addressRepo;
 	ParkingSlots slots;
 
-	//check parking slot availability 
+//Check Slot availability 
+	
 	@Override
 	public boolean checkAvailability(Date date, String time) throws ParkingSlotNotAvailableException {
 		ParkingSlots p = parkSlotsRepo.findByParkingDateAndParkingTime(date, time);
@@ -39,6 +40,8 @@ public class ParkingServiceImpl implements ParkingService {
 		return true;
 	}
 
+//Book Slot
+	
 	@Override
 	public boolean bookParkingSlot(ParkingSlots slot) throws ParkingSlotNotAvailableException {
 		Optional<ParkingSlots> p = parkSlotsRepo.findById(slot.getParkingSlotId());
@@ -48,6 +51,9 @@ public class ParkingServiceImpl implements ParkingService {
 		return true;
 	}
 
+	
+//Cancel Slot
+	
 	@Override
 	public boolean cancelParkingSlotBooking(ParkingSlots slot) throws NoSuchParkingSlotException {
 		Optional<ParkingSlots> p = parkSlotsRepo.findById(slot.getParkingSlotId());
@@ -57,13 +63,17 @@ public class ParkingServiceImpl implements ParkingService {
 		return true;
 	}
 
+//Display all Slot by Premise
+	
 	@Override
 	public List<ParkingPremise> getAllParkingSlotsByPremise(ParkingPremise parkingPremise) {
 		return parkPremiseRepo.findAll();
 	}
 
+//Display Slot by ID
+	
 	@Override
-	public Optional<ParkingSlots> getParkingSlotsById(long parkingSlotId) throws NoSuchParkingSlotException {
+	public Optional<ParkingSlots> getParkingSlotsById(long parkingSlotId) {
 
 		Optional<ParkingSlots> slot = parkSlotsRepo.findById(parkingSlotId);
 		if (!slot.isPresent())
