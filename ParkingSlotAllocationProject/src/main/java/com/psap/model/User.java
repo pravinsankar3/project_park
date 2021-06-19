@@ -3,6 +3,7 @@ package com.psap.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "usr")
@@ -13,6 +14,7 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String email;
+	@Min(10)
 	private String mobile;
 	private boolean isActive;
 	

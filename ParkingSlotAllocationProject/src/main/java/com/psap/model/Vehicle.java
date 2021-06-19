@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
 
 @Entity
 @Table(name = "Vehicle")
@@ -18,7 +19,9 @@ public class Vehicle {
 
 	@Enumerated(EnumType.ORDINAL)
 	private VehicleType vehicleType;
+	@Max(10)
 	private String vehicleNumber;
+	@Max(10)
 	private String vehicleCompany;
 	private String vehicleModel;
 
