@@ -75,18 +75,18 @@ public class ParkingController {
 		return new ResponseEntity<List<ParkingPremise>>(p, HttpStatus.OK);
 	}
 
-	@GetMapping("{pslots}")
-	public ResponseEntity<Optional<ParkingSlots>> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
-		Optional<ParkingSlots> ps = service.getParkingSlotsById(parkingSlotId);
-		return new ResponseEntity<Optional<ParkingSlots>>(ps, HttpStatus.OK);
-	}
+//	@GetMapping("{pslots}")
+//	public ResponseEntity<Optional<ParkingSlots>> getParkingSlotsById(@PathVariable("pslots") long parkingSlotId) {
+//		Optional<ParkingSlots> ps = service.getParkingSlotsById(parkingSlotId);
+//		return new ResponseEntity<Optional<ParkingSlots>>(ps, HttpStatus.OK);
+//	}
 
-	@GetMapping("{parkingId}")
-	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId) {
-
-		Optional<ParkingSlots> ParkingSlots = service.getParkingSlotsById(parkingId);
-
-		return new ResponseEntity<ParkingSlots>(ParkingSlots.get(), HttpStatus.OK);
-	}
+//	@GetMapping("{parkingId}")
+//	public ResponseEntity<ParkingSlots> getSlot(@PathVariable("parkingId") int parkingId) {
+//
+//		Optional<ParkingSlots> ParkingSlots = service.getParkingSlotsById(parkingId);
+//
+//		return new ResponseEntity<ParkingSlots>(ParkingSlots.get(), HttpStatus.OK);
+//	}
 
 }

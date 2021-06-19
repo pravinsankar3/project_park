@@ -84,10 +84,6 @@ class AdminServiceImplTest {
 	    assertThat(pps.size()>=0);
 	}
 	@Order(7)
-	public void modifyParkingPremiseTest() {
-		
-	}
-	@Order(8)
 	public void removeParkingPremiseTest() {
 		ParkingPremise pps = pp.findByParkingPremiseId(1);
 		if(pps!=null) {				
@@ -96,7 +92,7 @@ class AdminServiceImplTest {
 		Optional<User> u1=ur.findById((long) 1);			
 		assertThat(u1==null);
 	}
-	@Order(9)
+	@Order(8)
 	public void addParkingFloorTest() {
 		ParkingFloor pfs = new ParkingFloor();
 		pfs.setParkingFloorId(1);
@@ -106,12 +102,12 @@ class AdminServiceImplTest {
 		pf.save(pfs);
 		assertNotNull(pf.findById(pfs.getParkingFloorId()));
 	}
-	@Order(10)
+	@Order(9)
 	public void getParkingFloorByIdTest() {
 		ParkingFloor pfs  =	pf.findByParkingFloorId(1);	
 		assertEquals(pfs.getParkingFloorId(),1);
 	}
-	@Order(11)
+	@Order(10)
 	public void getParkingFloorByNumberTest() {
 		ParkingFloor pfs  =	pf.findByFloorNumber("1A");	
 		assertEquals(pfs.getFloorNumber(),"1A");

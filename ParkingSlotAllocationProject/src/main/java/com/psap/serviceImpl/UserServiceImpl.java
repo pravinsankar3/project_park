@@ -3,6 +3,8 @@ package com.psap.serviceImpl;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.psap.exceptions.DuplicateParkingPremiseException;
 import com.psap.exceptions.DuplicateUserException;
 import com.psap.exceptions.InvalidLoginCredintialException;
@@ -15,7 +17,7 @@ import com.psap.model.User;
 import com.psap.repository.LoginRepository;
 import com.psap.repository.UserRepository;
 import com.psap.service.UserService;
-
+@Service
 public class UserServiceImpl implements UserService {
 	
 	@Autowired
