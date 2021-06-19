@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.psap.exceptions.DuplicateParkingFloorException;
 import com.psap.exceptions.DuplicateParkingPremiseException;
@@ -20,7 +21,7 @@ import com.psap.repository.ParkingFloorRepository;
 import com.psap.repository.ParkingPremiseRepository;
 import com.psap.repository.UserRepository;
 import com.psap.service.AdminService;
-
+@Service
 public class AdminServiceImpl implements AdminService{
 	
 	@Autowired
@@ -133,7 +134,6 @@ public class AdminServiceImpl implements AdminService{
 	public ParkingFloor modifyParkingCapacity(ParkingFloor parkingFloor) {
 		ParkingFloor pfe = (ParkingFloor) pf.findByParkingFloorId(parkingFloor.getParkingFloorId());
 		if(parkingFloor.getParkingFloorId() != 0) {
-			
 			pfe.setParkingFloorId(parkingFloor.getParkingFloorId());
 		}
 		pfe.setFloorNumber(parkingFloor.getFloorNumber());

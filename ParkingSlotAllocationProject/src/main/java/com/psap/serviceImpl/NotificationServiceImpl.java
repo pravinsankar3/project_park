@@ -1,6 +1,7 @@
 package com.psap.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.psap.exceptions.NotificationException;
 import com.psap.model.ParkingSlots;
@@ -10,7 +11,7 @@ import com.psap.repository.ParkingSlotsRepository;
 import com.psap.repository.UserRepository;
 import com.psap.repository.VehicleRepository;
 import com.psap.service.NotificationService;
-
+@Service
 public class NotificationServiceImpl implements NotificationService {
 	
 	@Autowired
