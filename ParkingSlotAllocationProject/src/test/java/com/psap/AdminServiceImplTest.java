@@ -39,15 +39,7 @@ class AdminServiceImplTest {
 		lr.save(l);
 		assertNotNull(lr.findById("123A"));
 	}
-	@Test
-	public void blockUserTest() {
-		User u = ur.findByUserId(213);
-		if(u!=null) {				
-		ur.deleteById((long) 213);
-		}
-		User u1 = ur.findByUserId(213);
-		assertThat(u1==null);
-	}
+
 	@Test
 	public void addParkingPremiseTest() {
 		ParkingPremise pps = new ParkingPremise();
