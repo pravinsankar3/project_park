@@ -37,14 +37,12 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public Payment findPaymentById(long paymentId) throws NoSuchPaymentFoundException {
+	public Optional<Payment> findPaymentById(long paymentId) throws NoSuchPaymentFoundException {
 		// TODO Auto-generated method stub
 		Optional<Payment> p= dao.findById(paymentId);
-
-		dao.findById(paymentId);
-		if(p.isPresent())
+		if(!p.isPresent())
 			throw new NoSuchPaymentFoundException("No payment for this id");
-		return p.get();
+		return p;
 	}
 
 	@Override
