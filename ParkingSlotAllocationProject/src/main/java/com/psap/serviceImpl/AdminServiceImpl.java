@@ -33,6 +33,7 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	ParkingFloorRepository pf;
 
+	//checking login credentials
 	@Override
 	public boolean login(Login login) throws InvalidLoginCredintialException {
 		Optional<Login> l = lr.findById(login.getLoginId());
@@ -41,6 +42,7 @@ public class AdminServiceImpl implements AdminService{
 		return true;
 	}
 
+	//block user
 	@Override
 	public boolean blockUser(User user) throws NoSuchUserException {
 		Optional<User> u = ur.findById(user.getUserId());
@@ -49,7 +51,8 @@ public class AdminServiceImpl implements AdminService{
 		ur.delete(user);
 		return true;
 	}
-
+	
+	//adding parking premises 
 	@Override
 	public boolean addParkingPremise(ParkingPremise parkingPremise) throws DuplicateParkingPremiseException {
 		Optional<ParkingPremise> p = pp.findById(parkingPremise.getParkingPremiseId());
@@ -59,6 +62,7 @@ public class AdminServiceImpl implements AdminService{
 		return true;
 	}
 
+	//display parking premise by ID
 	@Override
 	public ParkingPremise getParkingPremiseById(long parkingPremiseId) throws NoSuchParkingPremiseException {
 		Optional<ParkingPremise> p = pp.findById((int) parkingPremiseId);
@@ -67,17 +71,20 @@ public class AdminServiceImpl implements AdminService{
 		return p.get();
 	}
 
+	//Display parking premise by premise name
 	@Override
 	public List<ParkingPremise> getParkingPremiseByName(String premiseName) throws NoSuchParkingPremiseException {
 		List<ParkingPremise> p = (List<ParkingPremise>) pp.findByParkingPremiseName(premiseName);
 		return p;
 	}
 
+	//display all parking premise
 	@Override
 	public List<ParkingPremise> getAllParkingPremises() {
 		return pp.findAll();
 	}
 
+	//modify parking premise
 	@Override
 	public ParkingPremise modifyParkingPremise(ParkingPremise parkingPremise) {
 		ParkingPremise pre = (ParkingPremise) pp.findByParkingPremiseId(parkingPremise.getParkingPremiseId());
@@ -92,6 +99,7 @@ public class AdminServiceImpl implements AdminService{
 		return pre;
 	}
 
+	//removing parking premise
 	@Override
 	public boolean removeParkingPremise(int parkingPremiseId) throws NoSuchParkingPremiseException {
 		Optional<ParkingPremise> p = pp.findById((int) parkingPremiseId);
@@ -101,6 +109,7 @@ public class AdminServiceImpl implements AdminService{
 		return true;
 	}
 
+	//adding parking floor
 	@Override
 	public boolean addParkingFloor(ParkingFloor parkingFloor) throws DuplicateParkingFloorException {
 		Optional<ParkingFloor> p = pf.findById(parkingFloor.getParkingFloorId());
@@ -110,6 +119,7 @@ public class AdminServiceImpl implements AdminService{
 		return true;
 	}
 
+	//display parking floor by ID
 	@Override
 	public ParkingFloor getParkingFloorById(long parkingFloorId) throws NoSuchParkingFloorException {
 		Optional<ParkingFloor> p = pf.findById((int) parkingFloorId);
@@ -118,6 +128,7 @@ public class AdminServiceImpl implements AdminService{
 		return p.get();
 	}
 
+	//display parking floor by number
 	@Override
 	public List<ParkingFloor> getParkingFloorByNumber(long parkingPremiseId, String floorNumber)
 			throws NoSuchParkingFloorException {
@@ -125,11 +136,13 @@ public class AdminServiceImpl implements AdminService{
 		return li;
 	}
 
+	//display all parking floor
 	@Override
 	public List<ParkingFloor> getAllParkingFloors(long parkingPremiseId) {
 		return pf.findAll();
 	}
 
+	//modify parking capacity
 	@Override
 	public ParkingFloor modifyParkingCapacity(ParkingFloor parkingFloor) {
 		if(parkingFloor.getParkingFloorId() == 0) {
@@ -140,6 +153,7 @@ public class AdminServiceImpl implements AdminService{
 		return parkingFloor;
 	}
 
+	//remove parking floor
 	@Override
 	public boolean removeParkingFloor(long parkingFloorId) throws NoSuchParkingPremiseException {
 		Optional<ParkingFloor> p = pf.findById((int) parkingFloorId);
