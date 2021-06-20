@@ -15,6 +15,7 @@ import javax.validation.constraints.Max;
 public class Vehicle {
 	// should be auto-generated
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int vehicleId;
 
 	@Enumerated(EnumType.ORDINAL)
