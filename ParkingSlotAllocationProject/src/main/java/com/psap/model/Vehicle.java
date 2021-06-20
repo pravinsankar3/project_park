@@ -1,5 +1,6 @@
 package com.psap.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Vehicle")
@@ -20,9 +22,9 @@ public class Vehicle {
 
 	@Enumerated(EnumType.ORDINAL)
 	private VehicleType vehicleType;
-	@Max(10)
+	@Column(length = 12)
+	@Size(min = 10, max = 12)
 	private String vehicleNumber;
-	@Max(10)
 	private String vehicleCompany;
 	private String vehicleModel;
 
