@@ -36,8 +36,6 @@ class AdminServiceImplTest {
 		Login l = new Login(); 
 		l.setLoginId("123A");
 		l.setPassword("hello123");
-//		l.setRole(new Role(1, "Programmer", "Software Programmer"));
-//		l.setUser(new User(1234, "Vijay", "Janarthanan", "hello12@gmail.com", "1234567890", true));
 		lr.save(l);
 		assertNotNull(lr.findById("123A"));
 	}
@@ -55,7 +53,6 @@ class AdminServiceImplTest {
 		ParkingPremise pps = new ParkingPremise();
 		pps.setParkingPremiseId(1);
 		pps.setParkingPremiseName("New Age Parking Solutions");
-//		pps.setPremiseAddress(new Address(101, "Vellore", "Tamil Nadu", "632001"));
 		pp.save(pps);
 		assertNotNull(pp.findById(1));
 	}
@@ -89,7 +86,6 @@ class AdminServiceImplTest {
 		pfs.setParkingFloorId(1);
 		pfs.setNumberOfParkingSlots(100);
 		pfs.setFloorNumber("1A");
-//		pfs.setParkingPremise(new ParkingPremise(100, "Parking Venture", new Address(15, "Chennai", "Tamil Nadu", "600017"), 5));;
 		pf.save(pfs);
 		assertNotNull(pf.findByParkingFloorId(1));
 	}
