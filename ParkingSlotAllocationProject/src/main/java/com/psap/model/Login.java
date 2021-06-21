@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "Login")
@@ -13,6 +14,7 @@ public class Login implements Serializable{
 
 	@Id
 	private String loginId;
+	@Min(5)
 	private String password;
 	@OneToOne()
 	private User usr;

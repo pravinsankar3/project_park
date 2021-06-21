@@ -12,6 +12,7 @@ public interface ParkingSlotsRepository extends JpaRepository <ParkingSlots, Lon
 
 	ParkingSlots findByParkingDateAndParkingTime(Date d, String t);
 	
+	ParkingSlots findByParkingSlotId(long parkingSlotId);
 //	List<ParkingSlots> findByParkingPremises()
 	
 }

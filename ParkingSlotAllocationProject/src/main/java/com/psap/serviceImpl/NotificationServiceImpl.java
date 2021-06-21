@@ -26,7 +26,7 @@ public class NotificationServiceImpl implements NotificationService {
 	
 	
 	@Override
-	public String sendRegistration(User user) throws NotificationException {
+	public String sendRegistrationByEmail(User user) throws NotificationException {
 		if(!(user.isActive())) {
 			throw new NotificationException("User is not active");
 		}else {
@@ -35,7 +35,7 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public String sendParkingConfirmation(User user, ParkingSlots slot) throws NotificationException {
+	public String sendParkingConfirmationByEmail(User user, ParkingSlots slot) throws NotificationException {
 		if(!(user.isActive())) {
 			throw new NotificationException("User is not active");
 		}else {
@@ -44,7 +44,7 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public String sendParkingCancellation(User user, ParkingSlots slot) throws NotificationException {
+	public String sendParkingCancellationByEmail(User user, ParkingSlots slot) throws NotificationException {
 		if(!(user.isActive())) {
 			throw new NotificationException("User is not active");
 		}else {
@@ -53,7 +53,7 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public String sendForgotPassword(User user) throws NotificationException {
+	public String sendForgotPasswordByEmail(User user) throws NotificationException {
 		if(!(user.isActive())) {
 			throw new NotificationException("User is not active");
 		}else {
@@ -62,7 +62,7 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public String sendLoginId(User user) throws NotificationException {
+	public String sendLoginIdByEmail(User user) throws NotificationException {
 		return "Dear"+ user.getFirstName()+"Your loginId is " ;
 	}
 

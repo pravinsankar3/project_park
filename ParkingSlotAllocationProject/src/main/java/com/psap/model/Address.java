@@ -3,6 +3,8 @@ package com.psap.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "Address")
@@ -12,6 +14,7 @@ public class Address {
 	private int addressId;
 	private String city;
 	private String state;
+	@Max(6)
 	private String pin;
 	
 	// Constructors, Getter & Setter method

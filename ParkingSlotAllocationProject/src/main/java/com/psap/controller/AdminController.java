@@ -39,7 +39,7 @@ public class AdminController {
 
 	// Get all parking floors
 	@GetMapping("allpfloor/{parkingPremiseId}")
-	public ResponseEntity<List<ParkingFloor>> getAllParkingFloors(@PathVariable ("parkingPremiseId") long parkingPremiseId) {
+	public ResponseEntity<List<ParkingFloor>> getAllParkingFloors(@PathVariable("parkingPremiseId") long parkingPremiseId) {
 		List<ParkingFloor> pf = aservice.getAllParkingFloors(parkingPremiseId);
 		return new ResponseEntity<List<ParkingFloor>>(pf, HttpStatus.OK);
 	}
@@ -52,7 +52,4 @@ public class AdminController {
 			else
 			return new ResponseEntity<String>("Parking Floor Added", HttpStatus.OK);
 	}
-
-	
-
-	}
+}

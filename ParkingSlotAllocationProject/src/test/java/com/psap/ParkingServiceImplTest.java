@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.psap.exceptions.ParkingSlotNotAvailableException;
+import com.psap.model.ParkingFloor;
 import com.psap.model.ParkingPremise;
 import com.psap.model.ParkingSlots;
 import com.psap.repository.AddressRepository;
@@ -33,24 +35,39 @@ public class ParkingServiceImplTest {
 	@Autowired
 	AddressRepository addressRepo; 
 	ParkingSlots slots;
+	
 	@Autowired
 	ParkingServiceImpl psi;
-
 	
 	
 	@Test
-	public void checkAvailTest(){
-		ParkingPremise p = new ParkingPremise();
-		int i = psi.getAllParkingSlotsByPremise(p).size();
-		int j = parkPremiseRepo.findAll().size();
-		assertEquals( i, j);
-	}
-	
-	@Test
-	public void d() throws ParkingSlotNotAvailableException{
+	public void slotBookTest() throws ParkingSlotNotAvailableException{
 		Date date = new Date();
 		boolean value = psi.checkAvailability(date, "01:00");
 		assertEquals( true , value);
 	}
+	
+	@Test
+	public void getAllSlotsByPremiseTest(){
+		ParkingPremise p = new ParkingPremise();
+		int i = psi.getAllParkingSlotsByPremise(p).size();
+		int j = parkPremiseRepo.findAll().size();
+		assertEquals(i, j);
+	}
+	
+	@Test
+	public void getParkingSlotsByIdTest() {
+	ParkingSlots ps  =	parkSlotsRepo.findByParkingSlotId(10);	
+	assertEquals(ps.getParkingSlotId(),10);
+	}
+	
+	@Test
+	public void bookSlotTest() {
+		ParkingSlots p = new ParkingSlots();
+		p.setParkingSlotId(15);
+		parkSlotsRepo.save(p);
+		assertEquals(p.getParkingSlotId(),15);
+	}
+	
 	
 }
