@@ -26,14 +26,14 @@ public class UserServiceImplTest {
 	@Test
 	public void registerTest() {
 		User u = new User();
-		u.setUserId(1);
+		u.setUserId(12);
 		u.setActive(true);
-		u.setEmail("abx@hmail.com");
-		u.setFirstName("annf");
-		u.setLastName("hgfh");
-		u.setMobile("123456789");
+		u.setEmail("udaykumar@gmail.com");
+		u.setFirstName("Uday");
+		u.setLastName("Kumar");
+		u.setMobile("987654321");
 		urepo.save(u);
-		assertNotNull(urepo.findByUserId(1));
+		assertNotNull(urepo.findByUserId(12));
 	}
 	@Test
 	public void loginTest() {
@@ -45,14 +45,14 @@ public class UserServiceImplTest {
 	}
 	@Test
 	public void findUserProfileByIdTest() {
-		User u  =	urepo.findByUserId(1);
-		assertEquals(u.getUserId(),1);
+		User us  =	urepo.findByUserId(11);
+		assertEquals(us.getUserId(),11);
 	}
 	
 	@Test
 	public void findUserProfileByEmailTest() {
-		User u = urepo.findByEmail("abx@hmail.com");
-		assertEquals(u.getEmail(),"abx@hmail.com");
+		User ur = urepo.findByEmail("siva@gmail.com");
+		assertEquals(ur.getEmail(),"siva@gmail.com");
 	}
 	@Test
 	public void deleteUserByIdTest() {

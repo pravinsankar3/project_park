@@ -12,5 +12,6 @@ import com.psap.model.Payment;
 public interface PaymentRepository extends JpaRepository <Payment, Long>{
 	
 	List<Payment> findBypaymentDateTime(Date paymentDate);
+	Payment findByPaymentId(long paymentId);
 
 }

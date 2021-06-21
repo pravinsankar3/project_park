@@ -22,9 +22,9 @@ public class VehicleServiceImpl implements VehicleService{
 	@Override
 	public boolean addUsersVehicle(Vehicle vehicle) throws DuplicateVehicleException {
 		System.out.println(vehicle.getOwner());
-		Optional<Vehicle> v = dao.findById((int) vehicle.getVehicleId());
+		Optional<Vehicle> v = Optional.ofNullable(dao.findByVehicleNumber(vehicle.getVehicleNumber()));
 		if(v.isPresent())
-			throw new DuplicateVehicleException("Vehicle already exist");
+			throw new DuplicateVehicleException("Vehicle of number " + vehicle.getVehicleNumber() + " already exist");
 		dao.save(vehicle);
 		return true;
 	}
@@ -33,7 +33,7 @@ public class VehicleServiceImpl implements VehicleService{
 	public Vehicle findVehicleByVehicleNumber(String vehicleNumber, int userId) throws NoSuchVehicleException {
 		Vehicle userVehicle = dao.findByVehicleNumberAndOwnerUserId(vehicleNumber, userId);
 		if(userVehicle == null)
-			throw new NoSuchVehicleException("No Vehicle found of this Vehicle Number");
+			throw new NoSuchVehicleException("No Vehicle found for Vehicle Number " + vehicleNumber);
 		return userVehicle;
 	}
 

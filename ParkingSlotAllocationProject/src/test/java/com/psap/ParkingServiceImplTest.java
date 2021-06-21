@@ -3,17 +3,10 @@ package com.psap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import com.psap.exceptions.ParkingSlotNotAvailableException;
-import com.psap.model.ParkingFloor;
 import com.psap.model.ParkingPremise;
 import com.psap.model.ParkingSlots;
 import com.psap.repository.AddressRepository;

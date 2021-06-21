@@ -1,7 +1,6 @@
 package com.psap.service;
 
 import org.springframework.stereotype.Service;
-
 import com.psap.exceptions.DuplicateUserException;
 import com.psap.exceptions.InvalidLoginCredintialException;
 import com.psap.exceptions.NoSuchUserException;
@@ -14,9 +13,7 @@ public interface UserService {
 	public boolean login(Login login) throws InvalidLoginCredintialException;
 	public User findUserProfileById(long userId) throws NoSuchUserException;
 	public User findUserProfileByEmail(String email) throws NoSuchUserException;
-//	public User modifyUserProfile(User user) throws NoSuchUserException;
 	public boolean deleteUserById(long userId) throws NoSuchUserException;
-//	public Login changePassword(Login login) throws InvalidLoginCredintialException;
 	public void forgotPassword(String loginId) throws NoSuchUserException;
 	public void forgotLoginId(String email) throws NoSuchUserException;
 }

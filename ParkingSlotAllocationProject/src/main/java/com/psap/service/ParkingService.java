@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.psap.exceptions.NoSuchParkingSlotException;
 import com.psap.exceptions.ParkingSlotNotAvailableException;
-import com.psap.model.ParkingFloor;
 import com.psap.model.ParkingPremise;
 import com.psap.model.ParkingSlots;
 
@@ -16,9 +15,9 @@ import com.psap.model.ParkingSlots;
 public interface ParkingService {
 	public boolean checkAvailability(Date date, String time) throws ParkingSlotNotAvailableException;
 	public boolean bookParkingSlot(ParkingSlots slot) throws ParkingSlotNotAvailableException;
-	public boolean cancelParkingSlotBooking(ParkingSlots slot) throws NoSuchParkingSlotException;
+	public boolean cancelParkingSlotBooking(long parkingSlotId) throws NoSuchParkingSlotException;
 	
-	public List<ParkingPremise> getAllParkingSlotsByPremise(ParkingPremise parkingPremise);
+	public List<ParkingSlots> getAllParkingSlotsByPremise(ParkingPremise parkingPremise);
 	public Optional<ParkingSlots> getParkingSlotsById(long parkingSlotId)throws NoSuchParkingSlotException;
 	
 	

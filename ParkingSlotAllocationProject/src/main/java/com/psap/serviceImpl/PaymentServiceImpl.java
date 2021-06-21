@@ -1,22 +1,13 @@
 package com.psap.serviceImpl;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.psap.exceptions.DuplicateParkingPremiseException;
-import com.psap.exceptions.DuplicateVehicleException;
-import com.psap.exceptions.NoSuchParkingPremiseException;
 import com.psap.exceptions.NoSuchPaymentFoundException;
-import com.psap.exceptions.NoSuchVehicleException;
 import com.psap.exceptions.PaymentFailureException;
-import com.psap.model.ParkingPremise;
 import com.psap.model.Payment;
-import com.psap.model.User;
-import com.psap.model.Vehicle;
 import com.psap.repository.PaymentRepository;
 import com.psap.service.PaymentService;
 
@@ -26,6 +17,7 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	PaymentRepository dao;
 	
+	//Parking Booking payment
 	@Override
 	public boolean parkingBookingPayment(Payment payment) throws PaymentFailureException {
 		// TODO Auto-generated method stub
@@ -36,22 +28,13 @@ public class PaymentServiceImpl implements PaymentService {
 		return true;
 	}
 
+	// Check for payment by id
 	@Override
-	public Payment findPaymentById(long paymentId) throws NoSuchPaymentFoundException {
-		// TODO Auto-generated method stub
+	public Optional<Payment> findPaymentById(long paymentId) throws NoSuchPaymentFoundException {
 		Optional<Payment> p= dao.findById(paymentId);
-
-		dao.findById(paymentId);
-		if(p.isPresent())
+		if(!p.isPresent())
 			throw new NoSuchPaymentFoundException("No payment for this id");
-		return p.get();
+		return p;
 	}
 
-	@Override
-	public List<Payment> findPaymentByDate(Date paymentDate) {
-		// TODO Auto-generated method stub
-		
-		List<Payment> paymentList = dao.findBypaymentDateTime(paymentDate);
-		return paymentList;
-	}
 }

@@ -55,19 +55,19 @@ public class ParkingServiceImpl implements ParkingService {
 //Cancel Slot
 	
 	@Override
-	public boolean cancelParkingSlotBooking(ParkingSlots slot) throws NoSuchParkingSlotException {
-		Optional<ParkingSlots> p = parkSlotsRepo.findById(slot.getParkingSlotId());
-		if (!p.isPresent())
-			throw new NoSuchParkingSlotException("Parking slot is not available");
-		parkSlotsRepo.delete(slot);
+	public boolean cancelParkingSlotBooking(long parkingSlotId) throws NoSuchParkingSlotException{
+		Optional<ParkingSlots> p = parkSlotsRepo.findById(parkingSlotId);
+		if(!p.isPresent())
+			throw new NoSuchParkingSlotException("No Parking Slot found for this ID");
+		parkSlotsRepo.deleteById(parkingSlotId);
 		return true;
 	}
 
 //Display all Slot by Premise
 	
 	@Override
-	public List<ParkingPremise> getAllParkingSlotsByPremise(ParkingPremise parkingPremise) {
-		return parkPremiseRepo.findAll();
+	public List<ParkingSlots> getAllParkingSlotsByPremise(ParkingPremise parkingPremise) {
+		return parkSlotsRepo.findAll();
 	}
 
 //Display Slot by ID
@@ -81,4 +81,13 @@ public class ParkingServiceImpl implements ParkingService {
 		return slot;
 	}
 
+	
+//	@Override
+//	public boolean cancelParkingSlotBooking(Optional<ParkingSlots> ps) throws NoSuchParkingSlotException {
+//		Optional<ParkingSlots> p = parkSlotsRepo.findById(ps. getParkingSlotId());
+//		if (!p.isPresent())
+//			throw new NoSuchParkingSlotException("Parking slot is not available");
+//		parkSlotsRepo.delete(p);
+//		return true;
+//	}
 }
