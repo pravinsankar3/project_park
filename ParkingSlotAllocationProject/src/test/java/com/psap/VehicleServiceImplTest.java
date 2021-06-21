@@ -67,7 +67,7 @@ public class VehicleServiceImplTest {
 	}
 	
 	@Test
-	@Order(3)
+	@Order(4)
 	public void findAllVehiclesByUserIdTest() {
 		List<Vehicle> vehiclesList = service.findAllVehiclesByUserId(1);
 		assertNotNull(vehiclesList);
@@ -75,7 +75,7 @@ public class VehicleServiceImplTest {
 	}
 	
 	@Test
-	@Order(4)
+	@Order(3)
 	public void modifyVehicleTest() {
 		Vehicle v = new Vehicle();
 		User u = new User();
