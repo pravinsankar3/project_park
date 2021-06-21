@@ -22,9 +22,9 @@ public class VehicleServiceImpl implements VehicleService{
 	@Override
 	public boolean addUsersVehicle(Vehicle vehicle) throws DuplicateVehicleException {
 		System.out.println(vehicle.getOwner());
-		Optional<Vehicle> v = Optional.ofNullable(dao.findByVehicleNumber(vehicle.getVehicleNumber()));
+		Optional<Vehicle> v = dao.findById((int) vehicle.getVehicleId());
 		if(v.isPresent())
-			throw new DuplicateVehicleException("Vehicle of number " + vehicle.getVehicleNumber() + " already exist");
+			throw new DuplicateVehicleException("Vehicle of number " +vehicle.getVehicleId() + "already exist");
 		dao.save(vehicle);
 		return true;
 	}
